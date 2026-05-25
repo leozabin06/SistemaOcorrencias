@@ -49,10 +49,13 @@ public class ValidacaoOcorrencia {
      * Usado tambem para filtragem em outros servicos.
      */
     public boolean ehDepartamentoInformatica(String nomeDepartamento) {
-        String normalizado = normalizar(nomeDepartamento);
+        String normalizado = normalizar(nomeDepartamento.trim());
         return normalizado.contains("informat")
             || normalizado.equals("ti")
-            || normalizado.contains("t.i");
+            || normalizado.contains("t.i")
+            || normalizado.contains("t.i.")
+            || normalizado.contains("tecnologia da informacao")
+            || normalizado.contains("tecnologia de informacao");
     }
 
     private String normalizar(String texto) {

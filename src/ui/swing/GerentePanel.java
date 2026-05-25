@@ -200,7 +200,10 @@ public class GerentePanel extends JPanel {
         try { funcInfo = service.listarFuncionariosInformatica(); }
         catch (Exception ex) { erro("Erro: " + ex.getMessage()); return; }
         if (funcInfo.isEmpty()) {
-            erro("Nenhum funcionario do depto de Informatica encontrado.\nCadastre um funcionario de Informatica primeiro.");
+            erro("Nenhum funcionario do depto de Informatica encontrado.\n\n"
+               + "Para registrar ocorrencias, e necessario:\n"
+               + "1. Cadastrar um departamento com nome contendo 'Informatica' ou 'TI'\n"
+               + "2. Cadastrar um funcionario vinculado a esse departamento");
             return;
         }
         JTextField fDesc      = new JTextField();
