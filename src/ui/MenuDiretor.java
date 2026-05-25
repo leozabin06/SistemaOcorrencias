@@ -2,17 +2,17 @@ package ui;
 
 import entidades.Departamento;
 import entidades.Gerente;
-import excecoes.ValidacaoException;
-import interfaces.IDiretorService;
+import erros.ErroValidacao;
+import interfaces.IDiretorServico;
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuDiretor {
 
-    private final IDiretorService service;
+    private final IDiretorServico service;
     private final Scanner sc;
 
-    public MenuDiretor(IDiretorService service, Scanner sc) {
+    public MenuDiretor(IDiretorServico service, Scanner sc) {
         this.service = service;
         this.sc = sc;
     }
@@ -45,7 +45,7 @@ public class MenuDiretor {
                     case 0 -> System.out.println("Voltando ao menu principal...");
                     default -> System.out.println("[!] Opcao invalida.");
                 }
-            } catch (ValidacaoException e) {
+            } catch (ErroValidacao e) {
                 System.out.println("[ERRO] " + e.getMessage());
             }
         } while (op != 0);
@@ -53,7 +53,7 @@ public class MenuDiretor {
 
     // ---- Departamentos ----
 
-    private void cadastrarDepartamento() throws ValidacaoException {
+    private void cadastrarDepartamento() throws ErroValidacao {
         System.out.println("\n-- Cadastrar Departamento --");
         int cod       = lerInt("Codigo: ");
         String nome   = lerString("Nome: ");
@@ -63,7 +63,7 @@ public class MenuDiretor {
         System.out.println("[OK] Departamento cadastrado com sucesso.");
     }
 
-    private void alterarDepartamento() throws ValidacaoException {
+    private void alterarDepartamento() throws ErroValidacao {
         listarDepartamentos();
         List<Departamento> lista = service.listarDepartamentos();
         if (lista.isEmpty()) return;
@@ -90,7 +90,7 @@ public class MenuDiretor {
 
     // ---- Gerentes ----
 
-    private void cadastrarGerente() throws ValidacaoException {
+    private void cadastrarGerente() throws ErroValidacao {
         System.out.println("\n-- Cadastrar Gerente --");
         if (service.listarDepartamentos().isEmpty()) {
             System.out.println("[!] Nenhum departamento cadastrado. Cadastre um departamento primeiro.");
@@ -105,7 +105,7 @@ public class MenuDiretor {
         System.out.println("[OK] Gerente cadastrado com sucesso.");
     }
 
-    private void alterarGerente() throws ValidacaoException {
+    private void alterarGerente() throws ErroValidacao {
         listarGerentes();
         List<Gerente> lista = service.listarGerentes();
         if (lista.isEmpty()) return;

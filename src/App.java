@@ -1,7 +1,7 @@
 import interfaces.*;
 import repositorios.mysql.*;
 import servicos.*;
-import ui.swing.MainFrame;
+import ui.swing.TelaPrincipal;
 import validadores.ValidacaoOcorrencia;
 
 import javax.swing.*;
@@ -11,18 +11,18 @@ public class App {
 
     public static void main(String[] args) {
         // repositorios
-        IDepartamentoRepository deptoRepo = new DepartamentoRepositoryMySQL();
-        IDiretorRepository diretorRepo = new DiretorRepositoryMySQL();
-        IGerenteRepository gerenteRepo = new GerenteRepositoryMySQL();
-        IFuncionarioRepository funcRepo = new FuncionarioRepositoryMySQL();
-        IOcorrenciaRepository ocorrenciaRepo = new OcorrenciaRepositoryMySQL();
+        IDepartamentoRepositorio deptoRepo = new DepartamentoRepositorioMySQL();
+        IDiretorRepositorio diretorRepo = new DiretorRepositorioMySQL();
+        IGerenteRepositorio gerenteRepo = new GerenteRepositorioMySQL();
+        IFuncionarioRepositorio funcRepo = new FuncionarioRepositorioMySQL();
+        IOcorrenciaRepositorio ocorrenciaRepo = new OcorrenciaRepositorioMySQL();
 
         ValidacaoOcorrencia validacao = new ValidacaoOcorrencia();
 
         // servicos (inversao de controle - injeta os repos pelo construtor)
-        IDiretorService diretorService = new DiretorService(deptoRepo, gerenteRepo);
-        IGerenteService gerenteService = new GerenteService(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
-        IFuncionarioService funcService = new FuncionarioService(ocorrenciaRepo);
+        IDiretorServico diretorService = new DiretorServico(deptoRepo, gerenteRepo);
+        IGerenteServico gerenteService = new GerenteServico(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
+        IFuncionarioServico funcService = new FuncionarioServico(ocorrenciaRepo);
 
         // abre a interface grafica
         SwingUtilities.invokeLater(() -> {
@@ -59,7 +59,7 @@ public class App {
             UIManager.put("control", corPainel);
             UIManager.put("text", corTexto);
 
-            MainFrame janela = new MainFrame(
+            TelaPrincipal janela = new TelaPrincipal(
                 diretorService, gerenteService, funcService,
                 diretorRepo, gerenteRepo, funcRepo
             );

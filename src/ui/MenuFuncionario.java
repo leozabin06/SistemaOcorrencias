@@ -3,8 +3,8 @@ package ui;
 import entidades.Funcionario;
 import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
-import excecoes.ValidacaoException;
-import interfaces.IFuncionarioService;
+import erros.ErroValidacao;
+import interfaces.IFuncionarioServico;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,10 +17,10 @@ import java.util.Scanner;
  */
 public class MenuFuncionario {
 
-    private final IFuncionarioService service;
+    private final IFuncionarioServico service;
     private final Scanner sc;
 
-    public MenuFuncionario(IFuncionarioService service, Scanner sc) {
+    public MenuFuncionario(IFuncionarioServico service, Scanner sc) {
         this.service = service;
         this.sc = sc;
     }
@@ -44,7 +44,7 @@ public class MenuFuncionario {
                     case 0 -> System.out.println("Voltando ao menu principal...");
                     default -> System.out.println("[!] Opcao invalida.");
                 }
-            } catch (ValidacaoException e) {
+            } catch (ErroValidacao e) {
                 System.out.println("[ERRO] " + e.getMessage());
             }
         } while (op != 0);
@@ -66,7 +66,7 @@ public class MenuFuncionario {
      * O funcionario pode alterar APENAS o status temporario.
      * O status definitivo e exclusivo do gerente.
      */
-    private void alterarStatusTemporario(Funcionario funcionario) throws ValidacaoException {
+    private void alterarStatusTemporario(Funcionario funcionario) throws ErroValidacao {
         List<Ocorrencia> lista = service.listarMinhasOcorrencias(funcionario.getMatricula());
         if (lista.isEmpty()) {
             System.out.println("Nenhuma ocorrencia atribuida a voce.");
@@ -85,7 +85,7 @@ public class MenuFuncionario {
         StatusOcorrencia novoStatus = switch (op) {
             case 1 -> StatusOcorrencia.ABERTA;
             case 2 -> StatusOcorrencia.ENCERRADA;
-            default -> throw new ValidacaoException("Opcao de status invalida.");
+            default -> throw new ErroValidacao("Opcao de status invalida.");
         };
 
         service.alterarStatusTemporario(num, funcionario.getMatricula(), novoStatus);

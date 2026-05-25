@@ -1,7 +1,7 @@
 package validadores;
 
 import entidades.Funcionario;
-import excecoes.ValidacaoException;
+import erros.ErroValidacao;
 import java.time.LocalDate;
 
 // Classe responsavel por validar as regras de negocio das ocorrencias (R6)
@@ -9,21 +9,21 @@ import java.time.LocalDate;
 public class ValidacaoOcorrencia {
 
     // R6: data da ocorrencia nao pode ser futura
-    public void validarDataOcorrencia(LocalDate data) throws ValidacaoException {
+    public void validarDataOcorrencia(LocalDate data) throws ErroValidacao {
         if (data.isAfter(LocalDate.now()))
-            throw new ValidacaoException("A data da ocorrencia nao pode ser uma data futura. Data informada: " + data);
+            throw new ErroValidacao("A data da ocorrencia nao pode ser uma data futura. Data informada: " + data);
     }
 
     // R6: data limite tem que ser futura
-    public void validarDataLimite(LocalDate dataLimite) throws ValidacaoException {
+    public void validarDataLimite(LocalDate dataLimite) throws ErroValidacao {
         if (!dataLimite.isAfter(LocalDate.now()))
-            throw new ValidacaoException("A data limite deve ser uma data futura. Data informada: " + dataLimite);
+            throw new ErroValidacao("A data limite deve ser uma data futura. Data informada: " + dataLimite);
     }
 
     // R6: funcionario alocado tem que ser do depto de informatica
-    public void validarFuncionarioInformatica(Funcionario funcionario) throws ValidacaoException {
+    public void validarFuncionarioInformatica(Funcionario funcionario) throws ErroValidacao {
         if (!ehDepartamentoInformatica(funcionario.getDepartamento().getNome())) {
-            throw new ValidacaoException(
+            throw new ErroValidacao(
                 "O funcionario '" + funcionario.getNome() +
                 "' pertence ao departamento '" + funcionario.getDepartamento().getNome() +
                 "'. O funcionario alocado deve ser do departamento de Informatica.");

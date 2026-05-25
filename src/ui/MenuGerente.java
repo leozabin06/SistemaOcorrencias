@@ -5,8 +5,8 @@ import entidades.Funcionario;
 import entidades.Gerente;
 import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
-import excecoes.ValidacaoException;
-import interfaces.IGerenteService;
+import erros.ErroValidacao;
+import interfaces.IGerenteServico;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,10 +24,10 @@ public class MenuGerente {
 
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private final IGerenteService service;
+    private final IGerenteServico service;
     private final Scanner sc;
 
-    public MenuGerente(IGerenteService service, Scanner sc) {
+    public MenuGerente(IGerenteServico service, Scanner sc) {
         this.service = service;
         this.sc = sc;
     }
@@ -63,7 +63,7 @@ public class MenuGerente {
                     case 0 -> System.out.println("Voltando ao menu principal...");
                     default -> System.out.println("[!] Opcao invalida.");
                 }
-            } catch (ValidacaoException e) {
+            } catch (ErroValidacao e) {
                 System.out.println("[ERRO] " + e.getMessage());
             }
         } while (op != 0);
@@ -71,7 +71,7 @@ public class MenuGerente {
 
     // ---- Funcionarios ----
 
-    private void cadastrarFuncionario() throws ValidacaoException {
+    private void cadastrarFuncionario() throws ErroValidacao {
         System.out.println("\n-- Cadastrar Funcionario --");
         String mat    = lerString("Matricula: ");
         String nome   = lerString("Nome: ");
@@ -82,7 +82,7 @@ public class MenuGerente {
         System.out.println("[OK] Funcionario cadastrado com sucesso.");
     }
 
-    private void alterarFuncionario() throws ValidacaoException {
+    private void alterarFuncionario() throws ErroValidacao {
         listarFuncionarios();
         if (service.listarFuncionarios().isEmpty()) return;
 
@@ -121,7 +121,7 @@ public class MenuGerente {
 
     // ---- Ocorrencias ----
 
-    private void registrarOcorrencia(Gerente gerente) throws ValidacaoException {
+    private void registrarOcorrencia(Gerente gerente) throws ErroValidacao {
         System.out.println("\n-- Registrar Ocorrencia --");
         System.out.println("Departamento reportante: " + gerente.getDepartamento().getNome());
 
@@ -152,7 +152,7 @@ public class MenuGerente {
         System.out.println("[OK] Ocorrencia registrada com sucesso.");
     }
 
-    private void alterarOcorrencia(Gerente gerente) throws ValidacaoException {
+    private void alterarOcorrencia(Gerente gerente) throws ErroValidacao {
         visualizarOcorrencias(gerente);
         List<Ocorrencia> lista = service.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo());
         if (lista.isEmpty()) return;
@@ -197,7 +197,7 @@ public class MenuGerente {
      * R5 - Tela exclusiva do Gerente: encerramento definitivo da ocorrencia.
      * O funcionario NAO tem acesso a esta opcao.
      */
-    private void alterarStatusDefinitivo(Gerente gerente) throws ValidacaoException {
+    private void alterarStatusDefinitivo(Gerente gerente) throws ErroValidacao {
         visualizarOcorrencias(gerente);
         List<Ocorrencia> lista = service.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo());
         if (lista.isEmpty()) return;
@@ -211,7 +211,7 @@ public class MenuGerente {
         StatusOcorrencia novoStatus = switch (op) {
             case 1 -> StatusOcorrencia.ABERTA;
             case 2 -> StatusOcorrencia.ENCERRADA;
-            default -> throw new ValidacaoException("Opcao de status invalida.");
+            default -> throw new ErroValidacao("Opcao de status invalida.");
         };
 
         service.alterarStatusDefinitivo(num, gerente, novoStatus);
