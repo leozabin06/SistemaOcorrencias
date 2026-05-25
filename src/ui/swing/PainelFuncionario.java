@@ -4,7 +4,7 @@ import entidades.Funcionario;
 import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
-import interfaces.IFuncionarioServico;
+import interfaces.IFuncionarioRegras;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,13 +18,13 @@ public class PainelFuncionario extends JPanel {
     private static final Color             COR_F = new Color(40, 100, 50);
 
     private final TelaPrincipal         frame;
-    private final IFuncionarioServico service;
+    private final IFuncionarioRegras service;
     private final Funcionario         funcionario;
 
     private DefaultTableModel modelOcorr;
     private JTable            tabela;
 
-    public PainelFuncionario(TelaPrincipal frame, IFuncionarioServico service, Funcionario funcionario) {
+    public PainelFuncionario(TelaPrincipal frame, IFuncionarioRegras service, Funcionario funcionario) {
         this.frame       = frame;
         this.service     = service;
         this.funcionario = funcionario;

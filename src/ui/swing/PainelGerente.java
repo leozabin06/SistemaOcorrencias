@@ -6,7 +6,7 @@ import entidades.Gerente;
 import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
-import interfaces.IGerenteServico;
+import interfaces.IGerenteRegras;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,13 +23,13 @@ public class PainelGerente extends JPanel {
     private static final Color             COR_G = new Color(0, 90, 120);
 
     private final TelaPrincipal      frame;
-    private final IGerenteServico service;
+    private final IGerenteRegras service;
     private final Gerente         gerente;
 
     private DefaultTableModel modelFunc;
     private DefaultTableModel modelOcorr;
 
-    public PainelGerente(TelaPrincipal frame, IGerenteServico service, Gerente gerente) {
+    public PainelGerente(TelaPrincipal frame, IGerenteRegras service, Gerente gerente) {
         this.frame   = frame;
         this.service = service;
         this.gerente = gerente;

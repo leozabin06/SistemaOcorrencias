@@ -25,9 +25,9 @@ javac -encoding UTF-8 -cp "%LIB%" -d "%BIN%" ^
   "%SRC%\interfaces\IGerenteRepositorio.java" ^
   "%SRC%\interfaces\IFuncionarioRepositorio.java" ^
   "%SRC%\interfaces\IOcorrenciaRepositorio.java" ^
-  "%SRC%\interfaces\IDiretorServico.java" ^
-  "%SRC%\interfaces\IGerenteServico.java" ^
-  "%SRC%\interfaces\IFuncionarioServico.java" ^
+  "%SRC%\interfaces\IDiretorRegras.java" ^
+  "%SRC%\interfaces\IGerenteRegras.java" ^
+  "%SRC%\interfaces\IFuncionarioRegras.java" ^
   "%SRC%\validadores\ValidacaoOcorrencia.java" ^
   "%SRC%\db\ConexaoDB.java" ^
   "%SRC%\repositorios\DepartamentoRepositorio.java" ^
@@ -40,9 +40,9 @@ javac -encoding UTF-8 -cp "%LIB%" -d "%BIN%" ^
   "%SRC%\repositorios\mysql\GerenteRepositorioMySQL.java" ^
   "%SRC%\repositorios\mysql\FuncionarioRepositorioMySQL.java" ^
   "%SRC%\repositorios\mysql\OcorrenciaRepositorioMySQL.java" ^
-  "%SRC%\servicos\DiretorServico.java" ^
-  "%SRC%\servicos\GerenteServico.java" ^
-  "%SRC%\servicos\FuncionarioServico.java" ^
+  "%SRC%\regras\DiretorRegras.java" ^
+  "%SRC%\regras\GerenteRegras.java" ^
+  "%SRC%\regras\FuncionarioRegras.java" ^
   "%SRC%\ui\swing\TelaPrincipal.java" ^
   "%SRC%\ui\swing\PainelLogin.java" ^
   "%SRC%\ui\swing\PainelDiretor.java" ^

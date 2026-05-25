@@ -12,7 +12,7 @@ import java.util.List;
  * alterar o status temporario (R5 - limitacao do funcionario).
  * Nao contem metodos de cadastro, departamentos ou status definitivo.
  */
-public interface IFuncionarioServico {
+public interface IFuncionarioRegras {
 
     /**
      * R5: Funcionario visualiza apenas ocorrencias atribuidas a ele.

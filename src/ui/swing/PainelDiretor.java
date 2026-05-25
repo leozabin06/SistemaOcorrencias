@@ -3,7 +3,7 @@ package ui.swing;
 import entidades.Departamento;
 import entidades.Gerente;
 import erros.ErroValidacao;
-import interfaces.IDiretorServico;
+import interfaces.IDiretorRegras;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,13 +14,13 @@ import java.util.List;
 public class PainelDiretor extends JPanel {
 
     private final TelaPrincipal      frame;
-    private final IDiretorServico service;
+    private final IDiretorRegras service;
     private final String          nomeDiretor;
 
     private DefaultTableModel modelDepto;
     private DefaultTableModel modelGerente;
 
-    public PainelDiretor(TelaPrincipal frame, IDiretorServico service, String nomeDiretor) {
+    public PainelDiretor(TelaPrincipal frame, IDiretorRegras service, String nomeDiretor) {
         this.frame       = frame;
         this.service     = service;
         this.nomeDiretor = nomeDiretor;

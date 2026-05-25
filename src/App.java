@@ -1,6 +1,6 @@
 import interfaces.*;
 import repositorios.mysql.*;
-import servicos.*;
+import regras.*;
 import ui.swing.TelaPrincipal;
 import validadores.ValidacaoOcorrencia;
 
@@ -20,9 +20,9 @@ public class App {
         ValidacaoOcorrencia validacao = new ValidacaoOcorrencia();
 
         // servicos (inversao de controle - injeta os repos pelo construtor)
-        IDiretorServico diretorService = new DiretorServico(deptoRepo, gerenteRepo);
-        IGerenteServico gerenteService = new GerenteServico(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
-        IFuncionarioServico funcService = new FuncionarioServico(ocorrenciaRepo);
+        IDiretorRegras diretorService = new DiretorRegras(deptoRepo, gerenteRepo);
+        IGerenteRegras gerenteService = new GerenteRegras(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
+        IFuncionarioRegras funcService = new FuncionarioRegras(ocorrenciaRepo);
 
         // abre a interface grafica
         SwingUtilities.invokeLater(() -> {

@@ -6,7 +6,7 @@ import entidades.Gerente;
 import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
-import interfaces.IGerenteServico;
+import interfaces.IGerenteRegras;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,10 +24,10 @@ public class MenuGerente {
 
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private final IGerenteServico service;
+    private final IGerenteRegras service;
     private final Scanner sc;
 
-    public MenuGerente(IGerenteServico service, Scanner sc) {
+    public MenuGerente(IGerenteRegras service, Scanner sc) {
         this.service = service;
         this.sc = sc;
     }

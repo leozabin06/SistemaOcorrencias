@@ -15,7 +15,7 @@ import java.util.List;
  * O Gerente gerencia funcionarios e registra/encerra ocorrencias (R5).
  * Nao contem metodos exclusivos do Diretor.
  */
-public interface IGerenteServico {
+public interface IGerenteRegras {
 
     // --- Funcionarios (R4) ---
     void cadastrarFuncionario(String matricula, String nome, int codigoDepto, String status)

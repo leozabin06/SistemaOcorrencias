@@ -1,18 +1,18 @@
-package servicos;
+package regras;
 
 import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
-import interfaces.IFuncionarioServico;
+import interfaces.IFuncionarioRegras;
 import interfaces.IOcorrenciaRepositorio;
 import java.util.List;
 
 // Service do Funcionario - so pode ver suas ocorrencias e mudar status temporario
-public class FuncionarioServico implements IFuncionarioServico {
+public class FuncionarioRegras implements IFuncionarioRegras {
 
     private final IOcorrenciaRepositorio ocorrenciaRepo;
 
-    public FuncionarioServico(IOcorrenciaRepositorio ocorrenciaRepo) {
+    public FuncionarioRegras(IOcorrenciaRepositorio ocorrenciaRepo) {
         this.ocorrenciaRepo = ocorrenciaRepo;
     }
 

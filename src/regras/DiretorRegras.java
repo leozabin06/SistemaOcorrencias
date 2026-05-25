@@ -1,21 +1,21 @@
-package servicos;
+package regras;
 
 import entidades.Departamento;
 import entidades.Gerente;
 import erros.ErroValidacao;
 import interfaces.IDepartamentoRepositorio;
-import interfaces.IDiretorServico;
+import interfaces.IDiretorRegras;
 import interfaces.IGerenteRepositorio;
 import java.util.List;
 
 // Service do Diretor - gerencia departamentos e gerentes
 // Usa IoC: recebe os repositorios pelo construtor
-public class DiretorServico implements IDiretorServico {
+public class DiretorRegras implements IDiretorRegras {
 
     private final IDepartamentoRepositorio deptoRepo;
     private final IGerenteRepositorio gerenteRepo;
 
-    public DiretorServico(IDepartamentoRepositorio deptoRepo, IGerenteRepositorio gerenteRepo) {
+    public DiretorRegras(IDepartamentoRepositorio deptoRepo, IGerenteRepositorio gerenteRepo) {
         this.deptoRepo = deptoRepo;
         this.gerenteRepo = gerenteRepo;
     }

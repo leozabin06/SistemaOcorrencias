@@ -26,15 +26,15 @@ public class TelaPrincipal extends JFrame {
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel container = new JPanel(cardLayout);
 
-    private final IDiretorServico diretorService;
-    private final IGerenteServico gerenteService;
-    private final IFuncionarioServico funcService;
+    private final IDiretorRegras diretorService;
+    private final IGerenteRegras gerenteService;
+    private final IFuncionarioRegras funcService;
     private final IDiretorRepositorio diretorRepo;
     private final IGerenteRepositorio gerenteRepo;
     private final IFuncionarioRepositorio funcRepo;
 
-    public TelaPrincipal(IDiretorServico diretorService, IGerenteServico gerenteService,
-                     IFuncionarioServico funcService, IDiretorRepositorio diretorRepo,
+    public TelaPrincipal(IDiretorRegras diretorService, IGerenteRegras gerenteService,
+                     IFuncionarioRegras funcService, IDiretorRepositorio diretorRepo,
                      IGerenteRepositorio gerenteRepo, IFuncionarioRepositorio funcRepo) {
         this.diretorService = diretorService;
         this.gerenteService = gerenteService;

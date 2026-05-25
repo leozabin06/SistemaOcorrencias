@@ -11,7 +11,7 @@ import java.util.List;
  * O Diretor gerencia departamentos e gerentes.
  * Nao contem metodos de funcionarios ou ocorrencias.
  */
-public interface IDiretorServico {
+public interface IDiretorRegras {
 
     // --- Departamentos (R1) ---
     void cadastrarDepartamento(int codigo, String nome, String descricao, String status)

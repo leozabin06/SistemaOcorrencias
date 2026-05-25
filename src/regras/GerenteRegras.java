@@ -1,4 +1,4 @@
-package servicos;
+package regras;
 
 import entidades.*;
 import enums.StatusOcorrencia;
@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
 
 // Service do Gerente - cadastra funcionarios e gerencia ocorrencias
 // IoC: recebe repos via construtor / SRP: validacao delegada pro ValidacaoOcorrencia
-public class GerenteServico implements IGerenteServico {
+public class GerenteRegras implements IGerenteRegras {
 
     private final IFuncionarioRepositorio funcRepo;
     private final IDepartamentoRepositorio deptoRepo;
     private final IOcorrenciaRepositorio ocorrenciaRepo;
     private final ValidacaoOcorrencia validacao;
 
-    public GerenteServico(IFuncionarioRepositorio funcRepo, IDepartamentoRepositorio deptoRepo,
+    public GerenteRegras(IFuncionarioRepositorio funcRepo, IDepartamentoRepositorio deptoRepo,
                           IOcorrenciaRepositorio ocorrenciaRepo, ValidacaoOcorrencia validacao) {
         this.funcRepo = funcRepo;
         this.deptoRepo = deptoRepo;

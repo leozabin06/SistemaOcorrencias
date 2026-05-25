@@ -4,7 +4,7 @@ import entidades.Funcionario;
 import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
-import interfaces.IFuncionarioServico;
+import interfaces.IFuncionarioRegras;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,10 +17,10 @@ import java.util.Scanner;
  */
 public class MenuFuncionario {
 
-    private final IFuncionarioServico service;
+    private final IFuncionarioRegras service;
     private final Scanner sc;
 
-    public MenuFuncionario(IFuncionarioServico service, Scanner sc) {
+    public MenuFuncionario(IFuncionarioRegras service, Scanner sc) {
         this.service = service;
         this.sc = sc;
     }

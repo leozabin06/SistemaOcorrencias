@@ -3,16 +3,16 @@ package ui;
 import entidades.Departamento;
 import entidades.Gerente;
 import erros.ErroValidacao;
-import interfaces.IDiretorServico;
+import interfaces.IDiretorRegras;
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuDiretor {
 
-    private final IDiretorServico service;
+    private final IDiretorRegras service;
     private final Scanner sc;
 
-    public MenuDiretor(IDiretorServico service, Scanner sc) {
+    public MenuDiretor(IDiretorRegras service, Scanner sc) {
         this.service = service;
         this.sc = sc;
     }
