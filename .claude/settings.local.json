@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mysql --version 2>/dev/null || echo \"mysql cli not in PATH\")",
+      "Read(//c/Program Files/MySQL/**)",
+      "Read(//c/Program Files \\(x86\\)/MySQL/**)",
+      "Bash(find 'C:/Program Files/MySQL' -name mysql-connector*.jar)",
+      "Read(//c//**)",
+      "Bash(find C:/Users/Leo -name mysql-connector*.jar)",
+      "Bash(curl --version 2>/dev/null | head -1 && mvn --version 2>/dev/null | head -1 && java -version 2>&1 | head -1)",
+      "Bash(find \"C:/Program Files/MySQL\" -name \"*.jar\" 2>/dev/null; find \"C:/Users/Leo\" -name \"*.jar\" 2>/dev/null | grep -i mysql | head -5; echo \"---fim---\")",
+      "Bash(curl -L -o \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/lib/mysql-connector-j-8.0.33.jar\" \\\\\n  \"https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar\" \\\\\n  --progress-bar 2>&1 | tail -5)",
+      "Bash(curl -v \"https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar\" -o \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/lib/mysql-connector-j-8.0.33.jar\" 2>&1 | grep -E \"HTTP|Location|curl|error\" | head -20)",
+      "Bash(curl -L -o \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/lib/mysql-connector-j-8.0.33.jar\" \\\\\n  \"https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar\" \\\\\n  2>&1 | grep -E \"HTTP|error|%\" | head -10)",
+      "Bash(\"C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe\" -u root -e \"SELECT VERSION\\(\\);\" 2>&1)",
+      "Bash(BASE=\"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal\"\nSRC=\"$BASE/src\"\nBIN=\"$BASE/bin\"\nLIB=\"$BASE/lib/mysql-connector-j-8.0.33.jar\"\n\nrm -rf \"$BIN\"\nmkdir -p \"$BIN\"\n\njavac -encoding UTF-8 -cp \"$LIB\" -d \"$BIN\" \\\\\n  \"$SRC/entities/\"*.java \\\\\n  \"$SRC/enums/\"*.java \\\\\n  \"$SRC/exceptions/\"*.java \\\\\n  \"$SRC/interfaces/\"*.java \\\\\n  \"$SRC/validators/\"*.java \\\\\n  \"$SRC/db/\"*.java \\\\\n  \"$SRC/repositories/\"*.java \\\\\n  \"$SRC/repositories/mysql/\"*.java \\\\\n  \"$SRC/services/\"*.java \\\\\n  \"$SRC/ui/swing/\"*.java \\\\\n  \"$SRC/App.java\" 2>&1)",
+      "Bash(cmd /c \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/compilar.bat\" 2>&1)",
+      "Bash(BASE=\"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal\"\nSRC=\"$BASE/src\"\nBIN=\"$BASE/bin\"\nLIB=\"$BASE/lib/mysql-connector-j-8.0.33.jar\"\nrm -rf \"$BIN\" && mkdir -p \"$BIN\"\njavac -encoding UTF-8 -cp \"$LIB\" -d \"$BIN\" \\\\\n  \"$SRC/entities/\"*.java \"$SRC/enums/\"*.java \"$SRC/exceptions/\"*.java \\\\\n  \"$SRC/interfaces/\"*.java \"$SRC/validators/\"*.java \"$SRC/db/\"*.java \\\\\n  \"$SRC/repositories/\"*.java \"$SRC/repositories/mysql/\"*.java \\\\\n  \"$SRC/services/\"*.java \"$SRC/ui/swing/\"*.java \"$SRC/App.java\" 2>&1)"
+    ]
+  }
+}
