@@ -34,9 +34,38 @@ public class App {
 
         // --- Interface Grafica ---
         SwingUtilities.invokeLater(() -> {
+            // Usar Nimbus LAF para controle total das cores
             try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception ignored) {}
+                for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+            } catch (Exception ignored) {
+                try { UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); }
+                catch (Exception ignored2) {}
+            }
+
+            // Forcar cores escuras nos textos para garantir legibilidade
+            javax.swing.plaf.ColorUIResource textoEscuro = new javax.swing.plaf.ColorUIResource(20, 20, 20);
+            javax.swing.plaf.ColorUIResource fundoClaro  = new javax.swing.plaf.ColorUIResource(255, 255, 255);
+            javax.swing.plaf.ColorUIResource fundoPainel = new javax.swing.plaf.ColorUIResource(245, 247, 250);
+            UIManager.put("Label.foreground", textoEscuro);
+            UIManager.put("TextField.foreground", textoEscuro);
+            UIManager.put("TextField.background", fundoClaro);
+            UIManager.put("TextArea.foreground", textoEscuro);
+            UIManager.put("ComboBox.foreground", textoEscuro);
+            UIManager.put("Table.foreground", textoEscuro);
+            UIManager.put("Table.background", fundoClaro);
+            UIManager.put("TableHeader.foreground", new javax.swing.plaf.ColorUIResource(255, 255, 255));
+            UIManager.put("TabbedPane.foreground", textoEscuro);
+            UIManager.put("List.foreground", textoEscuro);
+            UIManager.put("Panel.background", fundoPainel);
+            UIManager.put("OptionPane.messageForeground", textoEscuro);
+            UIManager.put("nimbusBase", new javax.swing.plaf.ColorUIResource(30, 60, 120));
+            UIManager.put("control", fundoPainel);
+            UIManager.put("text", textoEscuro);
 
             MainFrame janela = new MainFrame(
                 diretorService, gerenteService, funcService,

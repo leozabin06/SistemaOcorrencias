@@ -23,7 +23,8 @@
       "Bash(cd \"C:\\\\Users\\\\Leo\\\\OneDrive\\\\Área de Trabalho\\\\TrabFinal\" && javac -encoding UTF-8 -cp \"lib/mysql-connector-j-8.0.33.jar\" -d bin src/entities/*.java src/enums/*.java src/exceptions/*.java src/interfaces/*.java src/validators/*.java src/db/*.java src/repositories/*.java src/repositories/mysql/*.java src/services/*.java src/ui/swing/*.java src/App.java 2>&1 && rm -f TestConexao.java TestConexao.class && echo \"Compilacao OK\")",
       "Bash(cd \"C:\\\\Users\\\\Leo\\\\OneDrive\\\\Área de Trabalho\\\\TrabFinal\" && mysql -u root -p123456 -e \"SELECT * FROM ocorrencias_ti.departamento; SELECT f.matricula, f.nome, d.nome as depto FROM ocorrencias_ti.funcionario f JOIN ocorrencias_ti.departamento d ON f.codigo_departamento = d.codigo;\" 2>&1)",
       "Bash(where mysql:*)",
-      "Bash(\"/c/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe\" -u root -p123456 -e \"SELECT * FROM ocorrencias_ti.departamento; SELECT f.matricula, f.nome, d.nome as depto FROM ocorrencias_ti.funcionario f JOIN ocorrencias_ti.departamento d ON f.codigo_departamento = d.codigo;\" 2>&1)"
+      "Bash(\"/c/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe\" -u root -p123456 -e \"SELECT * FROM ocorrencias_ti.departamento; SELECT f.matricula, f.nome, d.nome as depto FROM ocorrencias_ti.funcionario f JOIN ocorrencias_ti.departamento d ON f.codigo_departamento = d.codigo;\" 2>&1)",
+      "Bash(cd \"C:\\\\Users\\\\Leo\\\\OneDrive\\\\Área de Trabalho\\\\TrabFinal\" && javac -encoding UTF-8 -cp \"lib/*;src\" -d bin src/App.java src/db/*.java src/entities/*.java src/enums/*.java src/exceptions/*.java src/interfaces/*.java src/repositories/*.java src/repositories/mysql/*.java src/services/*.java src/ui/swing/*.java src/validators/*.java 2>&1)"
     ]
   }
 }

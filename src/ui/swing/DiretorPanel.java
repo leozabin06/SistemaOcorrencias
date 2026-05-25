@@ -51,6 +51,7 @@ public class DiretorPanel extends JPanel {
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 13));
         tabs.setBackground(MainFrame.COR_FUNDO);
+        tabs.setForeground(MainFrame.COR_TEXTO);
         tabs.addTab("  Departamentos  ", abaDepto());
         tabs.addTab("  Gerentes  ",      abaGerente());
         return tabs;

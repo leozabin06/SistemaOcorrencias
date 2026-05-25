@@ -59,6 +59,7 @@ public class GerentePanel extends JPanel {
     private JTabbedPane corpo() {
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        tabs.setForeground(MainFrame.COR_TEXTO);
         tabs.addTab("  Funcionarios  ", abaFunc());
         tabs.addTab("  Ocorrencias  ",  abaOcorr());
         return tabs;
