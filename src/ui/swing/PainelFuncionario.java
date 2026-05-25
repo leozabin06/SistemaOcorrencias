@@ -18,15 +18,15 @@ public class PainelFuncionario extends JPanel {
     private static final Color             COR_F = new Color(40, 100, 50);
 
     private final TelaPrincipal         frame;
-    private final IFuncionarioRegras service;
+    private final IFuncionarioRegras regras;
     private final Funcionario         funcionario;
 
     private DefaultTableModel modelOcorr;
     private JTable            tabela;
 
-    public PainelFuncionario(TelaPrincipal frame, IFuncionarioRegras service, Funcionario funcionario) {
+    public PainelFuncionario(TelaPrincipal frame, IFuncionarioRegras regras, Funcionario funcionario) {
         this.frame       = frame;
-        this.service     = service;
+        this.regras = regras;
         this.funcionario = funcionario;
         setLayout(new BorderLayout());
         setBackground(TelaPrincipal.COR_FUNDO);
@@ -105,7 +105,7 @@ public class PainelFuncionario extends JPanel {
     private void carregarOcorr() {
         modelOcorr.setRowCount(0);
         try {
-            for (Ocorrencia o : service.listarMinhasOcorrencias(funcionario.getMatricula()))
+            for (Ocorrencia o : regras.listarMinhasOcorrencias(funcionario.getMatricula()))
                 modelOcorr.addRow(new Object[]{
                     o.getNumero(), o.getDescricao(),
                     o.getDataOcorrencia().format(FMT),
@@ -137,7 +137,7 @@ public class PainelFuncionario extends JPanel {
         if (escolha == null) return;
 
         try {
-            service.alterarStatusTemporario(num, funcionario.getMatricula(),
+            regras.alterarStatusTemporario(num, funcionario.getMatricula(),
                     "encerrada".equals(escolha) ? StatusOcorrencia.ENCERRADA : StatusOcorrencia.ABERTA);
             carregarOcorr();
             JOptionPane.showMessageDialog(frame,

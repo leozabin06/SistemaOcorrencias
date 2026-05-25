@@ -24,11 +24,11 @@ public class MenuGerente {
 
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private final IGerenteRegras service;
+    private final IGerenteRegras regras;
     private final Scanner sc;
 
-    public MenuGerente(IGerenteRegras service, Scanner sc) {
-        this.service = service;
+    public MenuGerente(IGerenteRegras regras, Scanner sc) {
+        this.regras = service;
         this.sc = sc;
     }
 
@@ -78,16 +78,16 @@ public class MenuGerente {
         listarDepartamentos();
         int cod       = lerInt("Codigo do departamento: ");
         String status = selecionarStatusAtivo();
-        service.cadastrarFuncionario(mat, nome, cod, status);
+        regras.cadastrarFuncionario(mat, nome, cod, status);
         System.out.println("[OK] Funcionario cadastrado com sucesso.");
     }
 
     private void alterarFuncionario() throws ErroValidacao {
         listarFuncionarios();
-        if (service.listarFuncionarios().isEmpty()) return;
+        if (regras.listarFuncionarios().isEmpty()) return;
 
         String mat = lerString("Matricula do funcionario a alterar: ");
-        Funcionario atual = service.listarFuncionarios().stream()
+        Funcionario atual = regras.listarFuncionarios().stream()
             .filter(f -> f.getMatricula().equalsIgnoreCase(mat))
             .findFirst().orElse(null);
         if (atual == null) { System.out.println("[!] Funcionario nao encontrado."); return; }
@@ -101,20 +101,20 @@ public class MenuGerente {
         if (cod == 0) cod = codAtual;
 
         String status = selecionarStatusAtivoOpcional(atual.getStatus());
-        service.alterarFuncionario(mat, nome, cod, status);
+        regras.alterarFuncionario(mat, nome, cod, status);
         System.out.println("[OK] Funcionario alterado com sucesso.");
     }
 
     private void listarFuncionarios() {
         System.out.println("\n-- Funcionarios Cadastrados --");
-        List<Funcionario> lista = service.listarFuncionarios();
+        List<Funcionario> lista = regras.listarFuncionarios();
         if (lista.isEmpty()) { System.out.println("Nenhum funcionario cadastrado."); return; }
         lista.forEach(f -> System.out.println("  " + f));
     }
 
     private void listarDepartamentos() {
         System.out.println("\n-- Departamentos Disponiveis --");
-        List<Departamento> lista = service.listarDepartamentos();
+        List<Departamento> lista = regras.listarDepartamentos();
         if (lista.isEmpty()) { System.out.println("Nenhum departamento cadastrado."); return; }
         lista.forEach(d -> System.out.println("  " + d));
     }
@@ -139,7 +139,7 @@ public class MenuGerente {
 
         // R6: funcionario alocado deve ser do depto de informatica
         System.out.println("\nFuncionarios disponiveis (departamento de Informatica):");
-        List<Funcionario> funcInfo = service.listarFuncionariosInformatica();
+        List<Funcionario> funcInfo = regras.listarFuncionariosInformatica();
         if (funcInfo.isEmpty()) {
             System.out.println("[!] Nenhum funcionario do departamento de Informatica encontrado.");
             System.out.println("    Cadastre um funcionario do depto de Informatica primeiro.");
@@ -148,13 +148,13 @@ public class MenuGerente {
         funcInfo.forEach(f -> System.out.println("  " + f));
 
         String matriculaFunc = lerString("Matricula do funcionario alocado: ");
-        service.registrarOcorrencia(gerente, desc, dataOcorrencia, dataLimite, matriculaFunc);
+        regras.registrarOcorrencia(gerente, desc, dataOcorrencia, dataLimite, matriculaFunc);
         System.out.println("[OK] Ocorrencia registrada com sucesso.");
     }
 
     private void alterarOcorrencia(Gerente gerente) throws ErroValidacao {
         visualizarOcorrencias(gerente);
-        List<Ocorrencia> lista = service.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo());
+        List<Ocorrencia> lista = regras.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo());
         if (lista.isEmpty()) return;
 
         int num = lerInt("Numero da ocorrencia a alterar: ");
@@ -171,21 +171,21 @@ public class MenuGerente {
         switch (op) {
             case 1 -> {
                 String novaDesc = lerString("Nova descricao: ");
-                service.alterarOcorrencia(num, gerente, novaDesc, null, null);
+                regras.alterarOcorrencia(num, gerente, novaDesc, null, null);
                 System.out.println("[OK] Descricao atualizada.");
             }
             case 2 -> {
                 LocalDate novaData = lerDataComValidacao(
                     "Nova data limite (dd/MM/yyyy) [deve ser futura]: ", true);
-                service.alterarOcorrencia(num, gerente, null, novaData, null);
+                regras.alterarOcorrencia(num, gerente, null, novaData, null);
                 System.out.println("[OK] Data limite atualizada.");
             }
             case 3 -> {
                 System.out.println("Funcionarios do departamento de Informatica:");
-                service.listarFuncionariosInformatica()
+                regras.listarFuncionariosInformatica()
                     .forEach(f -> System.out.println("  " + f));
                 String novaMatricula = lerString("Matricula do novo funcionario: ");
-                service.alterarOcorrencia(num, gerente, null, null, novaMatricula);
+                regras.alterarOcorrencia(num, gerente, null, null, novaMatricula);
                 System.out.println("[OK] Funcionario alocado atualizado.");
             }
             case 0 -> System.out.println("Operacao cancelada.");
@@ -199,7 +199,7 @@ public class MenuGerente {
      */
     private void alterarStatusDefinitivo(Gerente gerente) throws ErroValidacao {
         visualizarOcorrencias(gerente);
-        List<Ocorrencia> lista = service.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo());
+        List<Ocorrencia> lista = regras.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo());
         if (lista.isEmpty()) return;
 
         int num = lerInt("Numero da ocorrencia: ");
@@ -214,14 +214,14 @@ public class MenuGerente {
             default -> throw new ErroValidacao("Opcao de status invalida.");
         };
 
-        service.alterarStatusDefinitivo(num, gerente, novoStatus);
+        regras.alterarStatusDefinitivo(num, gerente, novoStatus);
         System.out.println("[OK] Status definitivo atualizado para: " + novoStatus.getValor());
     }
 
     private void visualizarOcorrencias(Gerente gerente) {
         System.out.println("\n-- Ocorrencias do Departamento: "
             + gerente.getDepartamento().getNome() + " --");
-        List<Ocorrencia> lista = service.listarOcorrenciasPorDepto(
+        List<Ocorrencia> lista = regras.listarOcorrenciasPorDepto(
             gerente.getDepartamento().getCodigo());
         if (lista.isEmpty()) {
             System.out.println("Nenhuma ocorrencia registrada para este departamento.");

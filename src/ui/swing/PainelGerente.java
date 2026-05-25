@@ -23,15 +23,15 @@ public class PainelGerente extends JPanel {
     private static final Color             COR_G = new Color(0, 90, 120);
 
     private final TelaPrincipal      frame;
-    private final IGerenteRegras service;
+    private final IGerenteRegras regras;
     private final Gerente         gerente;
 
     private DefaultTableModel modelFunc;
     private DefaultTableModel modelOcorr;
 
-    public PainelGerente(TelaPrincipal frame, IGerenteRegras service, Gerente gerente) {
+    public PainelGerente(TelaPrincipal frame, IGerenteRegras regras, Gerente gerente) {
         this.frame   = frame;
-        this.service = service;
+        this.regras = regras;
         this.gerente = gerente;
         setLayout(new BorderLayout());
         setBackground(TelaPrincipal.COR_FUNDO);
@@ -97,7 +97,7 @@ public class PainelGerente extends JPanel {
     private void carregarFunc() {
         modelFunc.setRowCount(0);
         try {
-            for (Funcionario f : service.listarFuncionarios())
+            for (Funcionario f : regras.listarFuncionarios())
                 modelFunc.addRow(new Object[]{f.getMatricula(), f.getNome(),
                         f.getDepartamento().getNome(), f.getStatus()});
         } catch (Exception ex) { erro("Erro ao carregar funcionarios: " + ex.getMessage()); }
@@ -115,7 +115,7 @@ public class PainelGerente extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
-            service.cadastrarFuncionario(fMat.getText().trim(), fNome.getText().trim(),
+            regras.cadastrarFuncionario(fMat.getText().trim(), fNome.getText().trim(),
                     dep.getCodigo(), (String) cbStatus.getSelectedItem());
             carregarFunc();
             sucesso("Funcionario cadastrado!");
@@ -139,7 +139,7 @@ public class PainelGerente extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
-            service.alterarFuncionario(mat, fNome.getText().trim(), dep.getCodigo(),
+            regras.alterarFuncionario(mat, fNome.getText().trim(), dep.getCodigo(),
                     (String) cbStatus.getSelectedItem());
             carregarFunc();
             sucesso("Funcionario atualizado!");
@@ -184,7 +184,7 @@ public class PainelGerente extends JPanel {
     private void carregarOcorr() {
         modelOcorr.setRowCount(0);
         try {
-            for (Ocorrencia o : service.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo()))
+            for (Ocorrencia o : regras.listarOcorrenciasPorDepto(gerente.getDepartamento().getCodigo()))
                 modelOcorr.addRow(new Object[]{
                     o.getNumero(), o.getDescricao(),
                     o.getDataOcorrencia().format(FMT),
@@ -198,7 +198,7 @@ public class PainelGerente extends JPanel {
 
     private void registrar() {
         List<Funcionario> funcInfo;
-        try { funcInfo = service.listarFuncionariosInformatica(); }
+        try { funcInfo = regras.listarFuncionariosInformatica(); }
         catch (Exception ex) { erro("Erro: " + ex.getMessage()); return; }
         if (funcInfo.isEmpty()) {
             erro("Nenhum funcionario do depto de Informatica encontrado.\n\n"
@@ -221,7 +221,7 @@ public class PainelGerente extends JPanel {
         if (JOptionPane.showConfirmDialog(frame, campos, "Registrar Ocorrencia",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
-            service.registrarOcorrencia(gerente, fDesc.getText().trim(),
+            regras.registrarOcorrencia(gerente, fDesc.getText().trim(),
                     LocalDate.parse(fDataOcorr.getText().trim(), FMT),
                     LocalDate.parse(fDataLim.getText().trim(), FMT),
                     ((Funcionario) cbFunc.getSelectedItem()).getMatricula());
@@ -249,23 +249,23 @@ public class PainelGerente extends JPanel {
                     JTextField f = new JTextField(desc);
                     if (JOptionPane.showConfirmDialog(frame, new Object[]{"Nova descricao:", f},
                             "Alterar", JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) return;
-                    service.alterarOcorrencia(num, gerente, f.getText().trim(), null, null);
+                    regras.alterarOcorrencia(num, gerente, f.getText().trim(), null, null);
                 }
                 case "Data Limite" -> {
                     JTextField f = new JTextField(dLim);
                     if (JOptionPane.showConfirmDialog(frame, new Object[]{"Nova data limite (dd/MM/yyyy):", f},
                             "Alterar", JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) return;
-                    service.alterarOcorrencia(num, gerente, null, LocalDate.parse(f.getText().trim(), FMT), null);
+                    regras.alterarOcorrencia(num, gerente, null, LocalDate.parse(f.getText().trim(), FMT), null);
                 }
                 default -> {
                     List<Funcionario> funcInfo;
-                    try { funcInfo = service.listarFuncionariosInformatica(); }
+                    try { funcInfo = regras.listarFuncionariosInformatica(); }
                     catch (Exception ex) { erro("Erro: " + ex.getMessage()); return; }
                     if (funcInfo.isEmpty()) { erro("Nenhum funcionario de Informatica."); return; }
                     JComboBox<Funcionario> cb = comboFunc(funcInfo);
                     if (JOptionPane.showConfirmDialog(frame, new Object[]{"Novo funcionario:", cb},
                             "Alterar", JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) return;
-                    service.alterarOcorrencia(num, gerente, null, null,
+                    regras.alterarOcorrencia(num, gerente, null, null,
                             ((Funcionario) cb.getSelectedItem()).getMatricula());
                 }
             }
@@ -286,7 +286,7 @@ public class PainelGerente extends JPanel {
                 "Status Definitivo", JOptionPane.QUESTION_MESSAGE, null, opcoes, opcoes[0]);
         if (escolha == null) return;
         try {
-            service.alterarStatusDefinitivo(num, gerente,
+            regras.alterarStatusDefinitivo(num, gerente,
                     "encerrada".equals(escolha) ? StatusOcorrencia.ENCERRADA : StatusOcorrencia.ABERTA);
             carregarOcorr();
             sucesso("Status definitivo: " + escolha);
@@ -294,7 +294,7 @@ public class PainelGerente extends JPanel {
     }
 
     private List<Departamento> deptos() {
-        try { return service.listarDepartamentos(); }
+        try { return regras.listarDepartamentos(); }
         catch (Exception ex) { erro("Erro ao buscar departamentos: " + ex.getMessage()); return null; }
     }
 

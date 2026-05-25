@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class MenuDiretor {
 
-    private final IDiretorRegras service;
+    private final IDiretorRegras regras;
     private final Scanner sc;
 
-    public MenuDiretor(IDiretorRegras service, Scanner sc) {
-        this.service = service;
+    public MenuDiretor(IDiretorRegras regras, Scanner sc) {
+        this.regras = service;
         this.sc = sc;
     }
 
@@ -59,17 +59,17 @@ public class MenuDiretor {
         String nome   = lerString("Nome: ");
         String desc   = lerString("Descricao: ");
         String status = selecionarStatusAtivo();
-        service.cadastrarDepartamento(cod, nome, desc, status);
+        regras.cadastrarDepartamento(cod, nome, desc, status);
         System.out.println("[OK] Departamento cadastrado com sucesso.");
     }
 
     private void alterarDepartamento() throws ErroValidacao {
         listarDepartamentos();
-        List<Departamento> lista = service.listarDepartamentos();
+        List<Departamento> lista = regras.listarDepartamentos();
         if (lista.isEmpty()) return;
 
         int cod = lerInt("Codigo do departamento a alterar: ");
-        Departamento atual = service.buscarDepartamento(cod);
+        Departamento atual = regras.buscarDepartamento(cod);
         if (atual == null) { System.out.println("[!] Departamento nao encontrado."); return; }
 
         System.out.println("Deixe em branco para manter o valor atual.");
@@ -77,13 +77,13 @@ public class MenuDiretor {
         String desc   = lerOpcional("Nova descricao [" + atual.getDescricao() + "]: ", atual.getDescricao());
         String status = selecionarStatusAtivoOpcional(atual.getStatus());
 
-        service.alterarDepartamento(cod, nome, desc, status);
+        regras.alterarDepartamento(cod, nome, desc, status);
         System.out.println("[OK] Departamento alterado com sucesso.");
     }
 
     private void listarDepartamentos() {
         System.out.println("\n-- Departamentos Cadastrados --");
-        List<Departamento> lista = service.listarDepartamentos();
+        List<Departamento> lista = regras.listarDepartamentos();
         if (lista.isEmpty()) { System.out.println("Nenhum departamento cadastrado."); return; }
         lista.forEach(d -> System.out.println("  " + d));
     }
@@ -92,7 +92,7 @@ public class MenuDiretor {
 
     private void cadastrarGerente() throws ErroValidacao {
         System.out.println("\n-- Cadastrar Gerente --");
-        if (service.listarDepartamentos().isEmpty()) {
+        if (regras.listarDepartamentos().isEmpty()) {
             System.out.println("[!] Nenhum departamento cadastrado. Cadastre um departamento primeiro.");
             return;
         }
@@ -101,17 +101,17 @@ public class MenuDiretor {
         listarDepartamentos();
         int cod     = lerInt("Codigo do departamento que gerencia: ");
         String status = selecionarStatusAtivo();
-        service.cadastrarGerente(mat, nome, cod, status);
+        regras.cadastrarGerente(mat, nome, cod, status);
         System.out.println("[OK] Gerente cadastrado com sucesso.");
     }
 
     private void alterarGerente() throws ErroValidacao {
         listarGerentes();
-        List<Gerente> lista = service.listarGerentes();
+        List<Gerente> lista = regras.listarGerentes();
         if (lista.isEmpty()) return;
 
         String mat  = lerString("Matricula do gerente a alterar: ");
-        Gerente atual = service.buscarGerente(mat);
+        Gerente atual = regras.buscarGerente(mat);
         if (atual == null) { System.out.println("[!] Gerente nao encontrado."); return; }
 
         System.out.println("Deixe em branco para manter o valor atual.");
@@ -123,13 +123,13 @@ public class MenuDiretor {
         if (cod == 0) cod = codAtual;
 
         String status = selecionarStatusAtivoOpcional(atual.getStatus());
-        service.alterarGerente(mat, nome, cod, status);
+        regras.alterarGerente(mat, nome, cod, status);
         System.out.println("[OK] Gerente alterado com sucesso.");
     }
 
     private void listarGerentes() {
         System.out.println("\n-- Gerentes Cadastrados --");
-        List<Gerente> lista = service.listarGerentes();
+        List<Gerente> lista = regras.listarGerentes();
         if (lista.isEmpty()) { System.out.println("Nenhum gerente cadastrado."); return; }
         lista.forEach(g -> System.out.println("  " + g));
     }

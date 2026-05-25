@@ -19,10 +19,10 @@ public class App {
 
         ValidacaoOcorrencia validacao = new ValidacaoOcorrencia();
 
-        // servicos (inversao de controle - injeta os repos pelo construtor)
-        IDiretorRegras diretorService = new DiretorRegras(deptoRepo, gerenteRepo);
-        IGerenteRegras gerenteService = new GerenteRegras(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
-        IFuncionarioRegras funcService = new FuncionarioRegras(ocorrenciaRepo);
+        // regras de negocio (inversao de controle - injeta os repos pelo construtor)
+        IDiretorRegras diretorRegras = new DiretorRegras(deptoRepo, gerenteRepo);
+        IGerenteRegras gerenteRegras = new GerenteRegras(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
+        IFuncionarioRegras funcRegras = new FuncionarioRegras(ocorrenciaRepo);
 
         // abre a interface grafica
         SwingUtilities.invokeLater(() -> {
@@ -60,7 +60,7 @@ public class App {
             UIManager.put("text", corTexto);
 
             TelaPrincipal janela = new TelaPrincipal(
-                diretorService, gerenteService, funcService,
+                diretorRegras, gerenteRegras, funcRegras,
                 diretorRepo, gerenteRepo, funcRepo
             );
             janela.setVisible(true);

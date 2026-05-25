@@ -26,22 +26,22 @@ public class TelaPrincipal extends JFrame {
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel container = new JPanel(cardLayout);
 
-    private final IDiretorRegras diretorService;
-    private final IGerenteRegras gerenteService;
-    private final IFuncionarioRegras funcService;
+    private final IDiretorRegras diretorRegras;
+    private final IGerenteRegras gerenteRegras;
+    private final IFuncionarioRegras funcRegras;
     private final IDiretorRepositorio diretorRepo;
     private final IGerenteRepositorio gerenteRepo;
     private final IFuncionarioRepositorio funcRepo;
 
-    public TelaPrincipal(IDiretorRegras diretorService, IGerenteRegras gerenteService,
-                     IFuncionarioRegras funcService, IDiretorRepositorio diretorRepo,
+    public TelaPrincipal(IDiretorRegras diretorRegras, IGerenteRegras gerenteRegras,
+                     IFuncionarioRegras funcRegras, IDiretorRepositorio diretorRepo,
                      IGerenteRepositorio gerenteRepo, IFuncionarioRepositorio funcRepo) {
-        this.diretorService = diretorService;
-        this.gerenteService = gerenteService;
-        this.funcService    = funcService;
-        this.diretorRepo    = diretorRepo;
-        this.gerenteRepo    = gerenteRepo;
-        this.funcRepo       = funcRepo;
+        this.diretorRegras = diretorRegras;
+        this.gerenteRegras = gerenteRegras;
+        this.funcRegras = funcRegras;
+        this.diretorRepo = diretorRepo;
+        this.gerenteRepo = gerenteRepo;
+        this.funcRepo = funcRepo;
         configurarJanela();
         container.add(new PainelLogin(this), "LOGIN");
         cardLayout.show(container, "LOGIN");
@@ -56,15 +56,15 @@ public class TelaPrincipal extends JFrame {
     }
 
     public void mostrarDiretor(String nomeDiretor) {
-        trocarPainel(new PainelDiretor(this, diretorService, nomeDiretor), "DIRETOR");
+        trocarPainel(new PainelDiretor(this, diretorRegras, nomeDiretor), "DIRETOR");
     }
 
     public void mostrarGerente(Gerente gerente) {
-        trocarPainel(new PainelGerente(this, gerenteService, gerente), "GERENTE");
+        trocarPainel(new PainelGerente(this, gerenteRegras, gerente), "GERENTE");
     }
 
     public void mostrarFuncionario(Funcionario funcionario) {
-        trocarPainel(new PainelFuncionario(this, funcService, funcionario), "FUNCIONARIO");
+        trocarPainel(new PainelFuncionario(this, funcRegras, funcionario), "FUNCIONARIO");
     }
 
     public void voltarLogin() {

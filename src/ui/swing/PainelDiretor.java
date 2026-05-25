@@ -14,15 +14,15 @@ import java.util.List;
 public class PainelDiretor extends JPanel {
 
     private final TelaPrincipal      frame;
-    private final IDiretorRegras service;
+    private final IDiretorRegras regras;
     private final String          nomeDiretor;
 
     private DefaultTableModel modelDepto;
     private DefaultTableModel modelGerente;
 
-    public PainelDiretor(TelaPrincipal frame, IDiretorRegras service, String nomeDiretor) {
+    public PainelDiretor(TelaPrincipal frame, IDiretorRegras regras, String nomeDiretor) {
         this.frame       = frame;
-        this.service     = service;
+        this.regras = regras;
         this.nomeDiretor = nomeDiretor;
         setLayout(new BorderLayout());
         setBackground(TelaPrincipal.COR_FUNDO);
@@ -92,7 +92,7 @@ public class PainelDiretor extends JPanel {
     private void carregarDeptos() {
         modelDepto.setRowCount(0);
         try {
-            for (Departamento d : service.listarDepartamentos())
+            for (Departamento d : regras.listarDepartamentos())
                 modelDepto.addRow(new Object[]{d.getCodigo(), d.getNome(), d.getDescricao(), d.getStatus()});
         } catch (Exception ex) { erro("Erro ao carregar departamentos:\n" + ex.getMessage()); }
     }
@@ -106,7 +106,7 @@ public class PainelDiretor extends JPanel {
         if (JOptionPane.showConfirmDialog(frame, campos, "Novo Departamento",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
-            service.cadastrarDepartamento(Integer.parseInt(fCod.getText().trim()),
+            regras.cadastrarDepartamento(Integer.parseInt(fCod.getText().trim()),
                     fNome.getText().trim(), fDesc.getText().trim(), (String) cbStatus.getSelectedItem());
             carregarDeptos();
             sucesso("Departamento cadastrado!");
@@ -135,7 +135,7 @@ public class PainelDiretor extends JPanel {
         if (JOptionPane.showConfirmDialog(frame, campos, "Editar Departamento [" + cod + "]",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
-            service.alterarDepartamento(cod, fNome.getText().trim(), fDesc.getText().trim(),
+            regras.alterarDepartamento(cod, fNome.getText().trim(), fDesc.getText().trim(),
                     (String) cbStatus.getSelectedItem());
             carregarDeptos();
             sucesso("Departamento atualizado!");
@@ -177,7 +177,7 @@ public class PainelDiretor extends JPanel {
     private void carregarGerentes() {
         modelGerente.setRowCount(0);
         try {
-            for (Gerente g : service.listarGerentes())
+            for (Gerente g : regras.listarGerentes())
                 modelGerente.addRow(new Object[]{g.getMatricula(), g.getNome(),
                         g.getDepartamento().getNome(), g.getStatus()});
         } catch (Exception ex) { erro("Erro ao carregar gerentes:\n" + ex.getMessage()); }
@@ -195,7 +195,7 @@ public class PainelDiretor extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
-            service.cadastrarGerente(fMat.getText().trim(), fNome.getText().trim(),
+            regras.cadastrarGerente(fMat.getText().trim(), fNome.getText().trim(),
                     dep.getCodigo(), (String) cbStatus.getSelectedItem());
             carregarGerentes();
             sucesso("Gerente cadastrado!");
@@ -220,7 +220,7 @@ public class PainelDiretor extends JPanel {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
-            service.alterarGerente(mat, fNome.getText().trim(), dep.getCodigo(),
+            regras.alterarGerente(mat, fNome.getText().trim(), dep.getCodigo(),
                     (String) cbStatus.getSelectedItem());
             carregarGerentes();
             sucesso("Gerente atualizado!");
@@ -228,7 +228,7 @@ public class PainelDiretor extends JPanel {
     }
 
     private List<Departamento> buscarDeptos() {
-        try { return service.listarDepartamentos(); }
+        try { return regras.listarDepartamentos(); }
         catch (Exception ex) { erro("Erro ao buscar departamentos: " + ex.getMessage()); return null; }
     }
 

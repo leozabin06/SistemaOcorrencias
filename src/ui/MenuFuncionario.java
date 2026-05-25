@@ -17,11 +17,11 @@ import java.util.Scanner;
  */
 public class MenuFuncionario {
 
-    private final IFuncionarioRegras service;
+    private final IFuncionarioRegras regras;
     private final Scanner sc;
 
-    public MenuFuncionario(IFuncionarioRegras service, Scanner sc) {
-        this.service = service;
+    public MenuFuncionario(IFuncionarioRegras regras, Scanner sc) {
+        this.regras = service;
         this.sc = sc;
     }
 
@@ -52,7 +52,7 @@ public class MenuFuncionario {
 
     private void visualizarOcorrencias(Funcionario funcionario) {
         System.out.println("\n-- Minhas Ocorrencias --");
-        List<Ocorrencia> lista = service.listarMinhasOcorrencias(funcionario.getMatricula());
+        List<Ocorrencia> lista = regras.listarMinhasOcorrencias(funcionario.getMatricula());
         if (lista.isEmpty()) {
             System.out.println("Nenhuma ocorrencia atribuida a voce no momento.");
             return;
@@ -67,7 +67,7 @@ public class MenuFuncionario {
      * O status definitivo e exclusivo do gerente.
      */
     private void alterarStatusTemporario(Funcionario funcionario) throws ErroValidacao {
-        List<Ocorrencia> lista = service.listarMinhasOcorrencias(funcionario.getMatricula());
+        List<Ocorrencia> lista = regras.listarMinhasOcorrencias(funcionario.getMatricula());
         if (lista.isEmpty()) {
             System.out.println("Nenhuma ocorrencia atribuida a voce.");
             return;
@@ -88,7 +88,7 @@ public class MenuFuncionario {
             default -> throw new ErroValidacao("Opcao de status invalida.");
         };
 
-        service.alterarStatusTemporario(num, funcionario.getMatricula(), novoStatus);
+        regras.alterarStatusTemporario(num, funcionario.getMatricula(), novoStatus);
         System.out.println("[OK] Status temporario atualizado para: " + novoStatus.getValor());
         System.out.println("     (O status definitivo permanece sob responsabilidade do gerente.)");
     }
