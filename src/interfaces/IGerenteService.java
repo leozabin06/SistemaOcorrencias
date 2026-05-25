@@ -1,11 +1,11 @@
 package interfaces;
 
-import entities.Departamento;
-import entities.Funcionario;
-import entities.Gerente;
-import entities.Ocorrencia;
+import entidades.Departamento;
+import entidades.Funcionario;
+import entidades.Gerente;
+import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
-import exceptions.ValidacaoException;
+import excecoes.ValidacaoException;
 import java.time.LocalDate;
 import java.util.List;
 

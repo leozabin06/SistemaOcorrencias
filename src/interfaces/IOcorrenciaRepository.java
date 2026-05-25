@@ -1,6 +1,6 @@
 package interfaces;
 
-import entities.Ocorrencia;
+import entidades.Ocorrencia;
 import java.util.List;
 
 public interface IOcorrenciaRepository {

@@ -1,6 +1,6 @@
 package interfaces;
 
-import entities.Funcionario;
+import entidades.Funcionario;
 import java.util.List;
 
 public interface IFuncionarioRepository {

@@ -1,8 +1,8 @@
 package interfaces;
 
-import entities.Ocorrencia;
+import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
-import exceptions.ValidacaoException;
+import excecoes.ValidacaoException;
 import java.util.List;
 
 /**

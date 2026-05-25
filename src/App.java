@@ -1,40 +1,32 @@
 import interfaces.*;
-import repositories.mysql.*;
-import services.*;
+import repositorios.mysql.*;
+import servicos.*;
 import ui.swing.MainFrame;
-import validators.ValidacaoOcorrencia;
+import validadores.ValidacaoOcorrencia;
 
 import javax.swing.*;
 
-/**
- * Ponto de entrada da aplicacao com interface grafica e banco de dados MySQL.
- *
- * IoC - Inversao de Controle:
- * Os repositorios MySQL sao instanciados aqui e injetados nos servicos.
- * Para voltar a versao em memoria, basta trocar os repositorios MySQL
- * pelos repositorios em memoria (ex: new DepartamentoRepository()).
- */
+// Classe principal - inicializa os repositorios e abre a tela
 public class App {
 
     public static void main(String[] args) {
-        // --- Repositorios MySQL ---
-        IDepartamentoRepository deptoRepo      = new DepartamentoRepositoryMySQL();
-        IDiretorRepository      diretorRepo    = new DiretorRepositoryMySQL();
-        IGerenteRepository      gerenteRepo    = new GerenteRepositoryMySQL();
-        IFuncionarioRepository  funcRepo       = new FuncionarioRepositoryMySQL();
-        IOcorrenciaRepository   ocorrenciaRepo = new OcorrenciaRepositoryMySQL();
+        // repositorios
+        IDepartamentoRepository deptoRepo = new DepartamentoRepositoryMySQL();
+        IDiretorRepository diretorRepo = new DiretorRepositoryMySQL();
+        IGerenteRepository gerenteRepo = new GerenteRepositoryMySQL();
+        IFuncionarioRepository funcRepo = new FuncionarioRepositoryMySQL();
+        IOcorrenciaRepository ocorrenciaRepo = new OcorrenciaRepositoryMySQL();
 
-        // --- Validador ---
         ValidacaoOcorrencia validacao = new ValidacaoOcorrencia();
 
-        // --- Servicos ---
-        IDiretorService     diretorService = new DiretorService(deptoRepo, gerenteRepo);
-        IGerenteService     gerenteService = new GerenteService(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
-        IFuncionarioService funcService    = new FuncionarioService(ocorrenciaRepo);
+        // servicos (inversao de controle - injeta os repos pelo construtor)
+        IDiretorService diretorService = new DiretorService(deptoRepo, gerenteRepo);
+        IGerenteService gerenteService = new GerenteService(funcRepo, deptoRepo, ocorrenciaRepo, validacao);
+        IFuncionarioService funcService = new FuncionarioService(ocorrenciaRepo);
 
-        // --- Interface Grafica ---
+        // abre a interface grafica
         SwingUtilities.invokeLater(() -> {
-            // Usar Nimbus LAF para controle total das cores
+            // tenta usar Nimbus pra ficar mais bonito
             try {
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                     if ("Nimbus".equals(info.getName())) {
@@ -42,30 +34,30 @@ public class App {
                         break;
                     }
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
                 try { UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); }
-                catch (Exception ignored2) {}
+                catch (Exception ex) {}
             }
 
-            // Forcar cores escuras nos textos para garantir legibilidade
-            javax.swing.plaf.ColorUIResource textoEscuro = new javax.swing.plaf.ColorUIResource(20, 20, 20);
-            javax.swing.plaf.ColorUIResource fundoClaro  = new javax.swing.plaf.ColorUIResource(255, 255, 255);
-            javax.swing.plaf.ColorUIResource fundoPainel = new javax.swing.plaf.ColorUIResource(245, 247, 250);
-            UIManager.put("Label.foreground", textoEscuro);
-            UIManager.put("TextField.foreground", textoEscuro);
-            UIManager.put("TextField.background", fundoClaro);
-            UIManager.put("TextArea.foreground", textoEscuro);
-            UIManager.put("ComboBox.foreground", textoEscuro);
-            UIManager.put("Table.foreground", textoEscuro);
-            UIManager.put("Table.background", fundoClaro);
+            // configura cores pra ficar legivel
+            javax.swing.plaf.ColorUIResource corTexto = new javax.swing.plaf.ColorUIResource(20, 20, 20);
+            javax.swing.plaf.ColorUIResource corFundo = new javax.swing.plaf.ColorUIResource(255, 255, 255);
+            javax.swing.plaf.ColorUIResource corPainel = new javax.swing.plaf.ColorUIResource(245, 247, 250);
+            UIManager.put("Label.foreground", corTexto);
+            UIManager.put("TextField.foreground", corTexto);
+            UIManager.put("TextField.background", corFundo);
+            UIManager.put("TextArea.foreground", corTexto);
+            UIManager.put("ComboBox.foreground", corTexto);
+            UIManager.put("Table.foreground", corTexto);
+            UIManager.put("Table.background", corFundo);
             UIManager.put("TableHeader.foreground", new javax.swing.plaf.ColorUIResource(255, 255, 255));
-            UIManager.put("TabbedPane.foreground", textoEscuro);
-            UIManager.put("List.foreground", textoEscuro);
-            UIManager.put("Panel.background", fundoPainel);
-            UIManager.put("OptionPane.messageForeground", textoEscuro);
+            UIManager.put("TabbedPane.foreground", corTexto);
+            UIManager.put("List.foreground", corTexto);
+            UIManager.put("Panel.background", corPainel);
+            UIManager.put("OptionPane.messageForeground", corTexto);
             UIManager.put("nimbusBase", new javax.swing.plaf.ColorUIResource(30, 60, 120));
-            UIManager.put("control", fundoPainel);
-            UIManager.put("text", textoEscuro);
+            UIManager.put("control", corPainel);
+            UIManager.put("text", corTexto);
 
             MainFrame janela = new MainFrame(
                 diretorService, gerenteService, funcService,

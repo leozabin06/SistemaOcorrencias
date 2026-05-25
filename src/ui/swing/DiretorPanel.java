@@ -1,8 +1,8 @@
 package ui.swing;
 
-import entities.Departamento;
-import entities.Gerente;
-import exceptions.ValidacaoException;
+import entidades.Departamento;
+import entidades.Gerente;
+import excecoes.ValidacaoException;
 import interfaces.IDiretorService;
 
 import javax.swing.*;
@@ -57,7 +57,7 @@ public class DiretorPanel extends JPanel {
         return tabs;
     }
 
-    // ======== ABA DEPARTAMENTOS ========
+    // aba departamentos
 
     private JPanel abaDepto() {
         JPanel p = new JPanel(new BorderLayout(8, 8));
@@ -144,7 +144,7 @@ public class DiretorPanel extends JPanel {
         }
     }
 
-    // ======== ABA GERENTES ========
+    // aba gerentes
 
     private JPanel abaGerente() {
         JPanel p = new JPanel(new BorderLayout(8, 8));
@@ -227,7 +227,6 @@ public class DiretorPanel extends JPanel {
         } catch (ValidacaoException | RuntimeException ex) { erro(ex.getMessage()); }
     }
 
-    // ---- Helpers ----
     private List<Departamento> buscarDeptos() {
         try { return service.listarDepartamentos(); }
         catch (Exception ex) { erro("Erro ao buscar departamentos: " + ex.getMessage()); return null; }

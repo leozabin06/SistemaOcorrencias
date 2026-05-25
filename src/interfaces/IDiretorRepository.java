@@ -1,6 +1,6 @@
 package interfaces;
 
-import entities.Diretor;
+import entidades.Diretor;
 import java.util.List;
 
 public interface IDiretorRepository {

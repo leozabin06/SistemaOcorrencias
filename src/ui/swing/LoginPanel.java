@@ -1,8 +1,8 @@
 package ui.swing;
 
-import entities.Diretor;
-import entities.Funcionario;
-import entities.Gerente;
+import entidades.Diretor;
+import entidades.Funcionario;
+import entidades.Gerente;
 import interfaces.IDiretorRepository;
 import interfaces.IFuncionarioRepository;
 import interfaces.IGerenteRepository;
@@ -11,12 +11,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-/**
- * Tela de login inicial do sistema.
- */
+// Tela de login - usuario informa matricula e escolhe o perfil
 public class LoginPanel extends JPanel {
 
-    private final MainFrame  frame;
+    private final MainFrame frame;
     private final JTextField campMatricula = new JTextField(20);
 
     public LoginPanel(MainFrame frame) {
@@ -28,7 +26,6 @@ public class LoginPanel extends JPanel {
         add(construirRodape(),    BorderLayout.SOUTH);
     }
 
-    // ---- Cabecalho azul escuro ----
     private JPanel construirCabecalho() {
         JPanel p = new JPanel(new GridLayout(2, 1, 0, 6));
         p.setBackground(MainFrame.COR_CABECALHO);
@@ -47,7 +44,6 @@ public class LoginPanel extends JPanel {
         return p;
     }
 
-    // ---- Area central com formulario ----
     private JPanel construirCentro() {
         JPanel externo = new JPanel(new GridBagLayout());
         externo.setBackground(MainFrame.COR_FUNDO);
@@ -61,7 +57,6 @@ public class LoginPanel extends JPanel {
         ));
         card.setMaximumSize(new Dimension(420, 500));
 
-        // ---- Campo matricula ----
         JLabel lblMat = new JLabel("Matricula:");
         lblMat.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblMat.setForeground(MainFrame.COR_TEXTO);
@@ -77,15 +72,13 @@ public class LoginPanel extends JPanel {
         campMatricula.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
         campMatricula.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // ---- Separador ----
         JLabel lblAcesso = new JLabel("Entrar como:");
         lblAcesso.setFont(new Font("Segoe UI", Font.BOLD, 13));
         lblAcesso.setForeground(new Color(90, 90, 110));
         lblAcesso.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // ---- Botoes de login (largura total) ----
-        JButton btnDiretor     = MainFrame.botao("Entrar como Diretor",     MainFrame.COR_BOTAO_AZUL);
-        JButton btnGerente     = MainFrame.botao("Entrar como Gerente",     new Color(0, 110, 140));
+        JButton btnDiretor = MainFrame.botao("Entrar como Diretor", MainFrame.COR_BOTAO_AZUL);
+        JButton btnGerente = MainFrame.botao("Entrar como Gerente", new Color(0, 110, 140));
         JButton btnFuncionario = MainFrame.botao("Entrar como Funcionario", MainFrame.COR_BOTAO_VERDE);
 
         for (JButton btn : new JButton[]{btnDiretor, btnGerente, btnFuncionario}) {
@@ -93,24 +86,19 @@ public class LoginPanel extends JPanel {
             btn.setAlignmentX(Component.LEFT_ALIGNMENT);
         }
 
-        // ---- Separador visual ----
         JSeparator sep = new JSeparator();
         sep.setForeground(MainFrame.COR_BORDA);
         sep.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10));
 
-        // ---- Botao cadastrar ----
         JButton btnCadDir = MainFrame.botao("+ Cadastrar Novo Diretor", new Color(110, 70, 0));
         btnCadDir.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         btnCadDir.setAlignmentX(Component.LEFT_ALIGNMENT);
         btnCadDir.setBackground(new Color(140, 90, 20));
 
-        // ---- Eventos ----
-        btnDiretor.addActionListener(e     -> loginDiretor());
-        btnGerente.addActionListener(e     -> loginGerente());
+        btnDiretor.addActionListener(e -> loginDiretor());
+        btnGerente.addActionListener(e -> loginGerente());
         btnFuncionario.addActionListener(e -> loginFuncionario());
-        btnCadDir.addActionListener(e      -> cadastrarDiretor());
-
-        // ---- Montar card ----
+        btnCadDir.addActionListener(e -> cadastrarDiretor());
         card.add(lblMat);
         card.add(Box.createVerticalStrut(6));
         card.add(campMatricula);
@@ -141,8 +129,6 @@ public class LoginPanel extends JPanel {
         p.add(l);
         return p;
     }
-
-    // ---- Acoes de login ----
 
     private void loginDiretor() {
         String mat = campMatricula.getText().trim();

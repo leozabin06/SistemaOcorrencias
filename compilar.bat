@@ -13,13 +13,13 @@ if exist "%BIN%" rmdir /s /q "%BIN%"
 mkdir "%BIN%"
 
 javac -encoding UTF-8 -cp "%LIB%" -d "%BIN%" ^
-  "%SRC%\entities\Departamento.java" ^
-  "%SRC%\entities\Diretor.java" ^
-  "%SRC%\entities\Gerente.java" ^
-  "%SRC%\entities\Funcionario.java" ^
-  "%SRC%\entities\Ocorrencia.java" ^
+  "%SRC%\entidades\Departamento.java" ^
+  "%SRC%\entidades\Diretor.java" ^
+  "%SRC%\entidades\Gerente.java" ^
+  "%SRC%\entidades\Funcionario.java" ^
+  "%SRC%\entidades\Ocorrencia.java" ^
   "%SRC%\enums\StatusOcorrencia.java" ^
-  "%SRC%\exceptions\ValidacaoException.java" ^
+  "%SRC%\excecoes\ValidacaoException.java" ^
   "%SRC%\interfaces\IDepartamentoRepository.java" ^
   "%SRC%\interfaces\IDiretorRepository.java" ^
   "%SRC%\interfaces\IGerenteRepository.java" ^
@@ -28,21 +28,21 @@ javac -encoding UTF-8 -cp "%LIB%" -d "%BIN%" ^
   "%SRC%\interfaces\IDiretorService.java" ^
   "%SRC%\interfaces\IGerenteService.java" ^
   "%SRC%\interfaces\IFuncionarioService.java" ^
-  "%SRC%\validators\ValidacaoOcorrencia.java" ^
+  "%SRC%\validadores\ValidacaoOcorrencia.java" ^
   "%SRC%\db\ConexaoDB.java" ^
-  "%SRC%\repositories\DepartamentoRepository.java" ^
-  "%SRC%\repositories\DiretorRepository.java" ^
-  "%SRC%\repositories\GerenteRepository.java" ^
-  "%SRC%\repositories\FuncionarioRepository.java" ^
-  "%SRC%\repositories\OcorrenciaRepository.java" ^
-  "%SRC%\repositories\mysql\DepartamentoRepositoryMySQL.java" ^
-  "%SRC%\repositories\mysql\DiretorRepositoryMySQL.java" ^
-  "%SRC%\repositories\mysql\GerenteRepositoryMySQL.java" ^
-  "%SRC%\repositories\mysql\FuncionarioRepositoryMySQL.java" ^
-  "%SRC%\repositories\mysql\OcorrenciaRepositoryMySQL.java" ^
-  "%SRC%\services\DiretorService.java" ^
-  "%SRC%\services\GerenteService.java" ^
-  "%SRC%\services\FuncionarioService.java" ^
+  "%SRC%\repositorios\DepartamentoRepository.java" ^
+  "%SRC%\repositorios\DiretorRepository.java" ^
+  "%SRC%\repositorios\GerenteRepository.java" ^
+  "%SRC%\repositorios\FuncionarioRepository.java" ^
+  "%SRC%\repositorios\OcorrenciaRepository.java" ^
+  "%SRC%\repositorios\mysql\DepartamentoRepositoryMySQL.java" ^
+  "%SRC%\repositorios\mysql\DiretorRepositoryMySQL.java" ^
+  "%SRC%\repositorios\mysql\GerenteRepositoryMySQL.java" ^
+  "%SRC%\repositorios\mysql\FuncionarioRepositoryMySQL.java" ^
+  "%SRC%\repositorios\mysql\OcorrenciaRepositoryMySQL.java" ^
+  "%SRC%\servicos\DiretorService.java" ^
+  "%SRC%\servicos\GerenteService.java" ^
+  "%SRC%\servicos\FuncionarioService.java" ^
   "%SRC%\ui\swing\MainFrame.java" ^
   "%SRC%\ui\swing\LoginPanel.java" ^
   "%SRC%\ui\swing\DiretorPanel.java" ^

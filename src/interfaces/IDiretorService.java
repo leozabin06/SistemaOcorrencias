@@ -1,8 +1,8 @@
 package interfaces;
 
-import entities.Departamento;
-import entities.Gerente;
-import exceptions.ValidacaoException;
+import entidades.Departamento;
+import entidades.Gerente;
+import excecoes.ValidacaoException;
 import java.util.List;
 
 /**

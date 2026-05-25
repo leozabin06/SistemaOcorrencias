@@ -1,15 +1,9 @@
 package enums;
 
-/**
- * OCP - Open/Closed Principle:
- * Novos status podem ser adicionados aqui sem alterar a logica central
- * dos servicos (GerenteService, FuncionarioService).
- */
+// Status possiveis de uma ocorrencia (OCP - pode adicionar novos sem mexer nos services)
 public enum StatusOcorrencia {
     ABERTA("aberta"),
     ENCERRADA("encerrada");
-    // Para adicionar novo status (ex: EM_ANDAMENTO), basta incluir aqui.
-    // Nenhuma classe de servico precisa ser modificada.
 
     private final String valor;
 
@@ -17,12 +11,8 @@ public enum StatusOcorrencia {
         this.valor = valor;
     }
 
-    public String getValor() {
-        return valor;
-    }
+    public String getValor() { return valor; }
 
     @Override
-    public String toString() {
-        return valor;
-    }
+    public String toString() { return valor; }
 }

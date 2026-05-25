@@ -1,6 +1,6 @@
 package interfaces;
 
-import entities.Gerente;
+import entidades.Gerente;
 import java.util.List;
 
 public interface IGerenteRepository {

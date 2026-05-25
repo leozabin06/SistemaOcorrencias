@@ -1,11 +1,11 @@
 package ui.swing;
 
-import entities.Departamento;
-import entities.Funcionario;
-import entities.Gerente;
-import entities.Ocorrencia;
+import entidades.Departamento;
+import entidades.Funcionario;
+import entidades.Gerente;
+import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
-import exceptions.ValidacaoException;
+import excecoes.ValidacaoException;
 import interfaces.IGerenteService;
 
 import javax.swing.*;
@@ -65,7 +65,7 @@ public class GerentePanel extends JPanel {
         return tabs;
     }
 
-    // ======== ABA FUNCIONARIOS ========
+    // aba funcionarios
 
     private JPanel abaFunc() {
         JPanel p = new JPanel(new BorderLayout(8, 8));
@@ -146,7 +146,7 @@ public class GerentePanel extends JPanel {
         } catch (ValidacaoException | RuntimeException ex) { erro(ex.getMessage()); }
     }
 
-    // ======== ABA OCORRENCIAS ========
+    // aba ocorrencias
 
     private JPanel abaOcorr() {
         JPanel p = new JPanel(new BorderLayout(8, 8));
@@ -293,7 +293,6 @@ public class GerentePanel extends JPanel {
         } catch (ValidacaoException | RuntimeException ex) { erro(ex.getMessage()); }
     }
 
-    // ---- Helpers ----
     private List<Departamento> deptos() {
         try { return service.listarDepartamentos(); }
         catch (Exception ex) { erro("Erro ao buscar departamentos: " + ex.getMessage()); return null; }

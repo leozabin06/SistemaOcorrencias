@@ -1,6 +1,6 @@
 package interfaces;
 
-import entities.Departamento;
+import entidades.Departamento;
 import java.util.List;
 
 public interface IDepartamentoRepository {

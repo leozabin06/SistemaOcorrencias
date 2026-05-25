@@ -1,9 +1,9 @@
 package ui;
 
-import entities.Funcionario;
-import entities.Ocorrencia;
+import entidades.Funcionario;
+import entidades.Ocorrencia;
 import enums.StatusOcorrencia;
-import exceptions.ValidacaoException;
+import excecoes.ValidacaoException;
 import interfaces.IFuncionarioService;
 import java.util.List;
 import java.util.Scanner;
