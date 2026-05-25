@@ -21,7 +21,7 @@ public class MenuFuncionario {
     private final Scanner sc;
 
     public MenuFuncionario(IFuncionarioRegras regras, Scanner sc) {
-        this.regras = service;
+        this.regras = regras;
         this.sc = sc;
     }
 

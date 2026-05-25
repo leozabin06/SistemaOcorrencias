@@ -28,7 +28,7 @@ public class MenuGerente {
     private final Scanner sc;
 
     public MenuGerente(IGerenteRegras regras, Scanner sc) {
-        this.regras = service;
+        this.regras = regras;
         this.sc = sc;
     }
 

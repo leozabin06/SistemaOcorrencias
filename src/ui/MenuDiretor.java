@@ -13,7 +13,7 @@ public class MenuDiretor {
     private final Scanner sc;
 
     public MenuDiretor(IDiretorRegras regras, Scanner sc) {
-        this.regras = service;
+        this.regras = regras;
         this.sc = sc;
     }
 
