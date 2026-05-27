@@ -2,6 +2,7 @@ package repositorios.mysql;
 
 import db.ConexaoDB;
 import entidades.Diretor;
+import enums.StatusEntidade;
 import interfaces.IDiretorRepositorio;
 
 import java.sql.*;
@@ -17,7 +18,7 @@ public class DiretorRepositorioMySQL implements IDiretorRepositorio {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, diretor.getMatricula());
             ps.setString(2, diretor.getNome());
-            ps.setString(3, diretor.getStatus());
+            ps.setString(3, diretor.getStatus().getValor());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar diretor: " + e.getMessage(), e);
@@ -32,7 +33,7 @@ public class DiretorRepositorioMySQL implements IDiretorRepositorio {
             ps.setString(1, matricula);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Diretor(rs.getString("matricula"), rs.getString("nome"), rs.getString("status"));
+                    return new Diretor(rs.getString("matricula"), rs.getString("nome"), StatusEntidade.fromValor(rs.getString("status")));
                 }
             }
         } catch (SQLException e) {
@@ -49,7 +50,7 @@ public class DiretorRepositorioMySQL implements IDiretorRepositorio {
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
-                lista.add(new Diretor(rs.getString("matricula"), rs.getString("nome"), rs.getString("status")));
+                lista.add(new Diretor(rs.getString("matricula"), rs.getString("nome"), StatusEntidade.fromValor(rs.getString("status"))));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar diretores: " + e.getMessage(), e);

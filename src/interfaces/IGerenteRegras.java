@@ -4,6 +4,7 @@ import entidades.Departamento;
 import entidades.Funcionario;
 import entidades.Gerente;
 import entidades.Ocorrencia;
+import enums.StatusEntidade;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
 import java.time.LocalDate;
@@ -18,10 +19,10 @@ import java.util.List;
 public interface IGerenteRegras {
 
     // --- Funcionarios (R4) ---
-    void cadastrarFuncionario(String matricula, String nome, int codigoDepto, String status)
+    void cadastrarFuncionario(String matricula, String nome, int codigoDepto, StatusEntidade status)
         throws ErroValidacao;
 
-    void alterarFuncionario(String matricula, String nome, int codigoDepto, String status)
+    void alterarFuncionario(String matricula, String nome, int codigoDepto, StatusEntidade status)
         throws ErroValidacao;
 
     List<Funcionario> listarFuncionarios();

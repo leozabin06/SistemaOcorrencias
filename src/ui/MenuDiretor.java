@@ -2,6 +2,7 @@ package ui;
 
 import entidades.Departamento;
 import entidades.Gerente;
+import enums.StatusEntidade;
 import erros.ErroValidacao;
 import interfaces.IDiretorRegras;
 import java.util.List;
@@ -58,7 +59,7 @@ public class MenuDiretor {
         int cod       = lerInt("Codigo: ");
         String nome   = lerString("Nome: ");
         String desc   = lerString("Descricao: ");
-        String status = selecionarStatusAtivo();
+        StatusEntidade status = selecionarStatusAtivo();
         regras.cadastrarDepartamento(cod, nome, desc, status);
         System.out.println("[OK] Departamento cadastrado com sucesso.");
     }
@@ -75,7 +76,7 @@ public class MenuDiretor {
         System.out.println("Deixe em branco para manter o valor atual.");
         String nome   = lerOpcional("Novo nome [" + atual.getNome() + "]: ", atual.getNome());
         String desc   = lerOpcional("Nova descricao [" + atual.getDescricao() + "]: ", atual.getDescricao());
-        String status = selecionarStatusAtivoOpcional(atual.getStatus());
+        StatusEntidade status = selecionarStatusAtivoOpcional(atual.getStatus());
 
         regras.alterarDepartamento(cod, nome, desc, status);
         System.out.println("[OK] Departamento alterado com sucesso.");
@@ -100,7 +101,7 @@ public class MenuDiretor {
         String nome = lerString("Nome: ");
         listarDepartamentos();
         int cod     = lerInt("Codigo do departamento que gerencia: ");
-        String status = selecionarStatusAtivo();
+        StatusEntidade status = selecionarStatusAtivo();
         regras.cadastrarGerente(mat, nome, cod, status);
         System.out.println("[OK] Gerente cadastrado com sucesso.");
     }
@@ -122,7 +123,7 @@ public class MenuDiretor {
         int cod = lerInt("Codigo do departamento (0 para manter [" + codAtual + "]): ");
         if (cod == 0) cod = codAtual;
 
-        String status = selecionarStatusAtivoOpcional(atual.getStatus());
+        StatusEntidade status = selecionarStatusAtivoOpcional(atual.getStatus());
         regras.alterarGerente(mat, nome, cod, status);
         System.out.println("[OK] Gerente alterado com sucesso.");
     }
@@ -136,17 +137,17 @@ public class MenuDiretor {
 
     // ---- Helpers de entrada ----
 
-    private String selecionarStatusAtivo() {
+    private StatusEntidade selecionarStatusAtivo() {
         System.out.println("Status:  1. Ativo   2. Inativo");
         int op = lerInt("Opcao: ");
-        return (op == 1) ? "ativo" : "inativo";
+        return (op == 1) ? StatusEntidade.ATIVO : StatusEntidade.INATIVO;
     }
 
-    private String selecionarStatusAtivoOpcional(String atual) {
-        System.out.println("Status:  1. Ativo   2. Inativo   0. Manter [" + atual + "]");
+    private StatusEntidade selecionarStatusAtivoOpcional(StatusEntidade atual) {
+        System.out.println("Status:  1. Ativo   2. Inativo   0. Manter [" + atual.getValor() + "]");
         int op = lerInt("Opcao: ");
-        if (op == 1) return "ativo";
-        if (op == 2) return "inativo";
+        if (op == 1) return StatusEntidade.ATIVO;
+        if (op == 2) return StatusEntidade.INATIVO;
         return atual;
     }
 

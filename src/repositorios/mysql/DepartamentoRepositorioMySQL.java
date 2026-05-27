@@ -2,6 +2,7 @@ package repositorios.mysql;
 
 import db.ConexaoDB;
 import entidades.Departamento;
+import enums.StatusEntidade;
 import interfaces.IDepartamentoRepositorio;
 
 import java.sql.*;
@@ -18,7 +19,7 @@ public class DepartamentoRepositorioMySQL implements IDepartamentoRepositorio {
             ps.setInt(1, departamento.getCodigo());
             ps.setString(2, departamento.getNome());
             ps.setString(3, departamento.getDescricao());
-            ps.setString(4, departamento.getStatus());
+            ps.setString(4, departamento.getStatus().getValor());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar departamento: " + e.getMessage(), e);
@@ -32,7 +33,7 @@ public class DepartamentoRepositorioMySQL implements IDepartamentoRepositorio {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, departamento.getNome());
             ps.setString(2, departamento.getDescricao());
-            ps.setString(3, departamento.getStatus());
+            ps.setString(3, departamento.getStatus().getValor());
             ps.setInt(4, departamento.getCodigo());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -49,7 +50,7 @@ public class DepartamentoRepositorioMySQL implements IDepartamentoRepositorio {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new Departamento(rs.getInt("codigo"), rs.getString("nome"),
-                            rs.getString("descricao"), rs.getString("status"));
+                            rs.getString("descricao"), StatusEntidade.fromValor(rs.getString("status")));
                 }
             }
         } catch (SQLException e) {
@@ -67,7 +68,7 @@ public class DepartamentoRepositorioMySQL implements IDepartamentoRepositorio {
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 lista.add(new Departamento(rs.getInt("codigo"), rs.getString("nome"),
-                        rs.getString("descricao"), rs.getString("status")));
+                        rs.getString("descricao"), StatusEntidade.fromValor(rs.getString("status"))));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar departamentos: " + e.getMessage(), e);

@@ -2,6 +2,7 @@ package ui.swing;
 
 import entidades.Departamento;
 import entidades.Gerente;
+import enums.StatusEntidade;
 import erros.ErroValidacao;
 import interfaces.IDiretorRegras;
 
@@ -93,7 +94,7 @@ public class PainelDiretor extends JPanel {
         modelDepto.setRowCount(0);
         try {
             for (Departamento d : regras.listarDepartamentos())
-                modelDepto.addRow(new Object[]{d.getCodigo(), d.getNome(), d.getDescricao(), d.getStatus()});
+                modelDepto.addRow(new Object[]{d.getCodigo(), d.getNome(), d.getDescricao(), d.getStatus().getValor()});
         } catch (Exception ex) { erro("Erro ao carregar departamentos:\n" + ex.getMessage()); }
     }
 
@@ -101,13 +102,13 @@ public class PainelDiretor extends JPanel {
         JTextField fCod  = new JTextField();
         JTextField fNome = new JTextField();
         JTextField fDesc = new JTextField();
-        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"ativo", "inativo"});
+        JComboBox<StatusEntidade> cbStatus = new JComboBox<>(StatusEntidade.values());
         Object[] campos = {"Codigo:", fCod, "Nome:", fNome, "Descricao:", fDesc, "Status:", cbStatus};
         if (JOptionPane.showConfirmDialog(frame, campos, "Novo Departamento",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             regras.cadastrarDepartamento(Integer.parseInt(fCod.getText().trim()),
-                    fNome.getText().trim(), fDesc.getText().trim(), (String) cbStatus.getSelectedItem());
+                    fNome.getText().trim(), fDesc.getText().trim(), (StatusEntidade) cbStatus.getSelectedItem());
             carregarDeptos();
             sucesso("Departamento cadastrado!");
         } catch (NumberFormatException ex) {
@@ -129,14 +130,14 @@ public class PainelDiretor extends JPanel {
 
         JTextField fNome = new JTextField(nome);
         JTextField fDesc = new JTextField(desc);
-        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"ativo", "inativo"});
-        cbStatus.setSelectedItem(status);
+        JComboBox<StatusEntidade> cbStatus = new JComboBox<>(StatusEntidade.values());
+        cbStatus.setSelectedItem(StatusEntidade.fromValor(status));
         Object[] campos = {"Nome:", fNome, "Descricao:", fDesc, "Status:", cbStatus};
         if (JOptionPane.showConfirmDialog(frame, campos, "Editar Departamento [" + cod + "]",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             regras.alterarDepartamento(cod, fNome.getText().trim(), fDesc.getText().trim(),
-                    (String) cbStatus.getSelectedItem());
+                    (StatusEntidade) cbStatus.getSelectedItem());
             carregarDeptos();
             sucesso("Departamento atualizado!");
         } catch (ErroValidacao | RuntimeException ex) {
@@ -179,7 +180,7 @@ public class PainelDiretor extends JPanel {
         try {
             for (Gerente g : regras.listarGerentes())
                 modelGerente.addRow(new Object[]{g.getMatricula(), g.getNome(),
-                        g.getDepartamento().getNome(), g.getStatus()});
+                        g.getDepartamento().getNome(), g.getStatus().getValor()});
         } catch (Exception ex) { erro("Erro ao carregar gerentes:\n" + ex.getMessage()); }
     }
 
@@ -189,14 +190,14 @@ public class PainelDiretor extends JPanel {
         JTextField fMat  = new JTextField();
         JTextField fNome = new JTextField();
         JComboBox<Departamento> cbDepto = comboDepto(deptos);
-        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"ativo", "inativo"});
+        JComboBox<StatusEntidade> cbStatus = new JComboBox<>(StatusEntidade.values());
         Object[] campos = {"Matricula:", fMat, "Nome:", fNome, "Departamento:", cbDepto, "Status:", cbStatus};
         if (JOptionPane.showConfirmDialog(frame, campos, "Novo Gerente",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
             regras.cadastrarGerente(fMat.getText().trim(), fNome.getText().trim(),
-                    dep.getCodigo(), (String) cbStatus.getSelectedItem());
+                    dep.getCodigo(), (StatusEntidade) cbStatus.getSelectedItem());
             carregarGerentes();
             sucesso("Gerente cadastrado!");
         } catch (ErroValidacao | RuntimeException ex) { erro(ex.getMessage()); }
@@ -213,15 +214,15 @@ public class PainelDiretor extends JPanel {
         if (deptos == null) return;
         JTextField fNome = new JTextField(nome);
         JComboBox<Departamento> cbDepto = comboDepto(deptos);
-        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"ativo", "inativo"});
-        cbStatus.setSelectedItem(status);
+        JComboBox<StatusEntidade> cbStatus = new JComboBox<>(StatusEntidade.values());
+        cbStatus.setSelectedItem(StatusEntidade.fromValor(status));
         Object[] campos = {"Nome:", fNome, "Departamento:", cbDepto, "Status:", cbStatus};
         if (JOptionPane.showConfirmDialog(frame, campos, "Editar Gerente [" + mat + "]",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
             regras.alterarGerente(mat, fNome.getText().trim(), dep.getCodigo(),
-                    (String) cbStatus.getSelectedItem());
+                    (StatusEntidade) cbStatus.getSelectedItem());
             carregarGerentes();
             sucesso("Gerente atualizado!");
         } catch (ErroValidacao | RuntimeException ex) { erro(ex.getMessage()); }

@@ -4,6 +4,7 @@ import entidades.Departamento;
 import entidades.Funcionario;
 import entidades.Gerente;
 import entidades.Ocorrencia;
+import enums.StatusEntidade;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
 import interfaces.IGerenteRegras;
@@ -99,7 +100,7 @@ public class PainelGerente extends JPanel {
         try {
             for (Funcionario f : regras.listarFuncionarios())
                 modelFunc.addRow(new Object[]{f.getMatricula(), f.getNome(),
-                        f.getDepartamento().getNome(), f.getStatus()});
+                        f.getDepartamento().getNome(), f.getStatus().getValor()});
         } catch (Exception ex) { erro("Erro ao carregar funcionarios: " + ex.getMessage()); }
     }
 
@@ -109,14 +110,14 @@ public class PainelGerente extends JPanel {
         JTextField fMat  = new JTextField();
         JTextField fNome = new JTextField();
         JComboBox<Departamento> cbDepto = comboDepto(deptos);
-        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"ativo","inativo"});
+        JComboBox<StatusEntidade> cbStatus = new JComboBox<>(StatusEntidade.values());
         Object[] campos = {"Matricula:", fMat, "Nome:", fNome, "Departamento:", cbDepto, "Status:", cbStatus};
         if (JOptionPane.showConfirmDialog(frame, campos, "Novo Funcionario",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
             regras.cadastrarFuncionario(fMat.getText().trim(), fNome.getText().trim(),
-                    dep.getCodigo(), (String) cbStatus.getSelectedItem());
+                    dep.getCodigo(), (StatusEntidade) cbStatus.getSelectedItem());
             carregarFunc();
             sucesso("Funcionario cadastrado!");
         } catch (ErroValidacao | RuntimeException ex) { erro(ex.getMessage()); }
@@ -132,15 +133,15 @@ public class PainelGerente extends JPanel {
         if (deptos == null) return;
         JTextField fNome = new JTextField(nome);
         JComboBox<Departamento> cbDepto = comboDepto(deptos);
-        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"ativo","inativo"});
-        cbStatus.setSelectedItem(status);
+        JComboBox<StatusEntidade> cbStatus = new JComboBox<>(StatusEntidade.values());
+        cbStatus.setSelectedItem(StatusEntidade.fromValor(status));
         Object[] campos = {"Nome:", fNome, "Departamento:", cbDepto, "Status:", cbStatus};
         if (JOptionPane.showConfirmDialog(frame, campos, "Editar Funcionario [" + mat + "]",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
         try {
             Departamento dep = (Departamento) cbDepto.getSelectedItem();
             regras.alterarFuncionario(mat, fNome.getText().trim(), dep.getCodigo(),
-                    (String) cbStatus.getSelectedItem());
+                    (StatusEntidade) cbStatus.getSelectedItem());
             carregarFunc();
             sucesso("Funcionario atualizado!");
         } catch (ErroValidacao | RuntimeException ex) { erro(ex.getMessage()); }

@@ -1,6 +1,7 @@
 package regras;
 
 import entidades.*;
+import enums.StatusEntidade;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
 import interfaces.*;
@@ -27,7 +28,7 @@ public class GerenteRegras implements IGerenteRegras {
     }
 
     @Override
-    public void cadastrarFuncionario(String matricula, String nome, int codigoDepto, String status)
+    public void cadastrarFuncionario(String matricula, String nome, int codigoDepto, StatusEntidade status)
             throws ErroValidacao {
         if (funcRepo.existeMatricula(matricula))
             throw new ErroValidacao("Ja existe um funcionario com a matricula " + matricula + ".");
@@ -37,7 +38,7 @@ public class GerenteRegras implements IGerenteRegras {
     }
 
     @Override
-    public void alterarFuncionario(String matricula, String nome, int codigoDepto, String status)
+    public void alterarFuncionario(String matricula, String nome, int codigoDepto, StatusEntidade status)
             throws ErroValidacao {
         Funcionario f = funcRepo.buscarPorMatricula(matricula);
         if (f == null) throw new ErroValidacao("Funcionario nao encontrado.");

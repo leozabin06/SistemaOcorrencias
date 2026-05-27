@@ -3,6 +3,7 @@ package ui.swing;
 import entidades.Diretor;
 import entidades.Funcionario;
 import entidades.Gerente;
+import enums.StatusEntidade;
 import interfaces.IDiretorRepositorio;
 import interfaces.IFuncionarioRepositorio;
 import interfaces.IGerenteRepositorio;
@@ -174,7 +175,7 @@ public class PainelLogin extends JPanel {
     private void cadastrarDiretor() {
         JTextField fMat  = new JTextField();
         JTextField fNome = new JTextField();
-        JComboBox<String> cbStatus = new JComboBox<>(new String[]{"em exercicio", "nao em exercicio"});
+        JComboBox<StatusEntidade> cbStatus = new JComboBox<>(StatusEntidade.values());
 
         Object[] campos = {"Matricula:", fMat, "Nome:", fNome, "Status:", cbStatus};
         int res = JOptionPane.showConfirmDialog(frame, campos,
@@ -188,7 +189,7 @@ public class PainelLogin extends JPanel {
         try {
             IDiretorRepositorio repo = frame.getDiretorRepo();
             if (repo.existeMatricula(mat)) { erro("Matricula ja cadastrada."); return; }
-            repo.salvar(new Diretor(mat, nome, (String) cbStatus.getSelectedItem()));
+            repo.salvar(new Diretor(mat, nome, (StatusEntidade) cbStatus.getSelectedItem()));
             JOptionPane.showMessageDialog(frame,
                 "Diretor cadastrado! Agora informe a matricula e clique em 'Entrar como Diretor'.",
                 "Sucesso", JOptionPane.INFORMATION_MESSAGE);

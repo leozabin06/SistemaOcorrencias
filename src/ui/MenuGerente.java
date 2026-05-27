@@ -4,6 +4,7 @@ import entidades.Departamento;
 import entidades.Funcionario;
 import entidades.Gerente;
 import entidades.Ocorrencia;
+import enums.StatusEntidade;
 import enums.StatusOcorrencia;
 import erros.ErroValidacao;
 import interfaces.IGerenteRegras;
@@ -77,7 +78,7 @@ public class MenuGerente {
         String nome   = lerString("Nome: ");
         listarDepartamentos();
         int cod       = lerInt("Codigo do departamento: ");
-        String status = selecionarStatusAtivo();
+        StatusEntidade status = selecionarStatusAtivo();
         regras.cadastrarFuncionario(mat, nome, cod, status);
         System.out.println("[OK] Funcionario cadastrado com sucesso.");
     }
@@ -100,7 +101,7 @@ public class MenuGerente {
         int cod = lerInt("Codigo do departamento (0 para manter [" + codAtual + "]): ");
         if (cod == 0) cod = codAtual;
 
-        String status = selecionarStatusAtivoOpcional(atual.getStatus());
+        StatusEntidade status = selecionarStatusAtivoOpcional(atual.getStatus());
         regras.alterarFuncionario(mat, nome, cod, status);
         System.out.println("[OK] Funcionario alterado com sucesso.");
     }
@@ -257,17 +258,17 @@ public class MenuGerente {
         }
     }
 
-    private String selecionarStatusAtivo() {
+    private StatusEntidade selecionarStatusAtivo() {
         System.out.println("Status:  1. Ativo   2. Inativo");
         int op = lerInt("Opcao: ");
-        return (op == 1) ? "ativo" : "inativo";
+        return (op == 1) ? StatusEntidade.ATIVO : StatusEntidade.INATIVO;
     }
 
-    private String selecionarStatusAtivoOpcional(String atual) {
-        System.out.println("Status:  1. Ativo   2. Inativo   0. Manter [" + atual + "]");
+    private StatusEntidade selecionarStatusAtivoOpcional(StatusEntidade atual) {
+        System.out.println("Status:  1. Ativo   2. Inativo   0. Manter [" + atual.getValor() + "]");
         int op = lerInt("Opcao: ");
-        if (op == 1) return "ativo";
-        if (op == 2) return "inativo";
+        if (op == 1) return StatusEntidade.ATIVO;
+        if (op == 2) return StatusEntidade.INATIVO;
         return atual;
     }
 

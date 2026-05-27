@@ -19,6 +19,7 @@ javac -encoding UTF-8 -cp "%LIB%" -d "%BIN%" ^
   "%SRC%\entidades\Funcionario.java" ^
   "%SRC%\entidades\Ocorrencia.java" ^
   "%SRC%\enums\StatusOcorrencia.java" ^
+  "%SRC%\enums\StatusEntidade.java" ^
   "%SRC%\erros\ErroValidacao.java" ^
   "%SRC%\interfaces\IDepartamentoRepositorio.java" ^
   "%SRC%\interfaces\IDiretorRepositorio.java" ^

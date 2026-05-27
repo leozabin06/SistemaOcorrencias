@@ -2,6 +2,7 @@ package regras;
 
 import entidades.Departamento;
 import entidades.Gerente;
+import enums.StatusEntidade;
 import erros.ErroValidacao;
 import interfaces.IDepartamentoRepositorio;
 import interfaces.IDiretorRegras;
@@ -21,7 +22,7 @@ public class DiretorRegras implements IDiretorRegras {
     }
 
     @Override
-    public void cadastrarDepartamento(int codigo, String nome, String descricao, String status)
+    public void cadastrarDepartamento(int codigo, String nome, String descricao, StatusEntidade status)
             throws ErroValidacao {
         if (deptoRepo.existeCodigo(codigo))
             throw new ErroValidacao("Ja existe um departamento com o codigo " + codigo + ".");
@@ -29,7 +30,7 @@ public class DiretorRegras implements IDiretorRegras {
     }
 
     @Override
-    public void alterarDepartamento(int codigo, String nome, String descricao, String status)
+    public void alterarDepartamento(int codigo, String nome, String descricao, StatusEntidade status)
             throws ErroValidacao {
         Departamento d = deptoRepo.buscarPorCodigo(codigo);
         if (d == null) throw new ErroValidacao("Departamento nao encontrado.");
@@ -50,7 +51,7 @@ public class DiretorRegras implements IDiretorRegras {
     }
 
     @Override
-    public void cadastrarGerente(String matricula, String nome, int codigoDepto, String status)
+    public void cadastrarGerente(String matricula, String nome, int codigoDepto, StatusEntidade status)
             throws ErroValidacao {
         if (gerenteRepo.existeMatricula(matricula))
             throw new ErroValidacao("Ja existe um gerente com a matricula " + matricula + ".");
@@ -60,7 +61,7 @@ public class DiretorRegras implements IDiretorRegras {
     }
 
     @Override
-    public void alterarGerente(String matricula, String nome, int codigoDepto, String status)
+    public void alterarGerente(String matricula, String nome, int codigoDepto, StatusEntidade status)
             throws ErroValidacao {
         Gerente g = gerenteRepo.buscarPorMatricula(matricula);
         if (g == null) throw new ErroValidacao("Gerente nao encontrado.");

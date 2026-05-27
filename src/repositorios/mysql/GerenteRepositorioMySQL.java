@@ -3,6 +3,7 @@ package repositorios.mysql;
 import db.ConexaoDB;
 import entidades.Departamento;
 import entidades.Gerente;
+import enums.StatusEntidade;
 import interfaces.IGerenteRepositorio;
 
 import java.sql.*;
@@ -21,7 +22,7 @@ public class GerenteRepositorioMySQL implements IGerenteRepositorio {
             ps.setString(1, gerente.getMatricula());
             ps.setString(2, gerente.getNome());
             ps.setInt(3, gerente.getDepartamento().getCodigo());
-            ps.setString(4, gerente.getStatus());
+            ps.setString(4, gerente.getStatus().getValor());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar gerente: " + e.getMessage(), e);
@@ -35,7 +36,7 @@ public class GerenteRepositorioMySQL implements IGerenteRepositorio {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, gerente.getNome());
             ps.setInt(2, gerente.getDepartamento().getCodigo());
-            ps.setString(3, gerente.getStatus());
+            ps.setString(3, gerente.getStatus().getValor());
             ps.setString(4, gerente.getMatricula());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -52,7 +53,7 @@ public class GerenteRepositorioMySQL implements IGerenteRepositorio {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Departamento dep = deptoRepo.buscarPorCodigo(rs.getInt("codigo_departamento"));
-                    return new Gerente(rs.getString("matricula"), rs.getString("nome"), dep, rs.getString("status"));
+                    return new Gerente(rs.getString("matricula"), rs.getString("nome"), dep, StatusEntidade.fromValor(rs.getString("status")));
                 }
             }
         } catch (SQLException e) {
@@ -70,7 +71,7 @@ public class GerenteRepositorioMySQL implements IGerenteRepositorio {
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Departamento dep = deptoRepo.buscarPorCodigo(rs.getInt("codigo_departamento"));
-                lista.add(new Gerente(rs.getString("matricula"), rs.getString("nome"), dep, rs.getString("status")));
+                lista.add(new Gerente(rs.getString("matricula"), rs.getString("nome"), dep, StatusEntidade.fromValor(rs.getString("status"))));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar gerentes: " + e.getMessage(), e);

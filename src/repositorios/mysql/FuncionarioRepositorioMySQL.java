@@ -3,6 +3,7 @@ package repositorios.mysql;
 import db.ConexaoDB;
 import entidades.Departamento;
 import entidades.Funcionario;
+import enums.StatusEntidade;
 import interfaces.IFuncionarioRepositorio;
 
 import java.sql.*;
@@ -21,7 +22,7 @@ public class FuncionarioRepositorioMySQL implements IFuncionarioRepositorio {
             ps.setString(1, funcionario.getMatricula());
             ps.setString(2, funcionario.getNome());
             ps.setInt(3, funcionario.getDepartamento().getCodigo());
-            ps.setString(4, funcionario.getStatus());
+            ps.setString(4, funcionario.getStatus().getValor());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar funcionario: " + e.getMessage(), e);
@@ -35,7 +36,7 @@ public class FuncionarioRepositorioMySQL implements IFuncionarioRepositorio {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, funcionario.getNome());
             ps.setInt(2, funcionario.getDepartamento().getCodigo());
-            ps.setString(3, funcionario.getStatus());
+            ps.setString(3, funcionario.getStatus().getValor());
             ps.setString(4, funcionario.getMatricula());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -52,7 +53,7 @@ public class FuncionarioRepositorioMySQL implements IFuncionarioRepositorio {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Departamento dep = deptoRepo.buscarPorCodigo(rs.getInt("codigo_departamento"));
-                    return new Funcionario(rs.getString("matricula"), rs.getString("nome"), dep, rs.getString("status"));
+                    return new Funcionario(rs.getString("matricula"), rs.getString("nome"), dep, StatusEntidade.fromValor(rs.getString("status")));
                 }
             }
         } catch (SQLException e) {
@@ -70,7 +71,7 @@ public class FuncionarioRepositorioMySQL implements IFuncionarioRepositorio {
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 Departamento dep = deptoRepo.buscarPorCodigo(rs.getInt("codigo_departamento"));
-                lista.add(new Funcionario(rs.getString("matricula"), rs.getString("nome"), dep, rs.getString("status")));
+                lista.add(new Funcionario(rs.getString("matricula"), rs.getString("nome"), dep, StatusEntidade.fromValor(rs.getString("status"))));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao listar funcionarios: " + e.getMessage(), e);
