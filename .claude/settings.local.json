@@ -49,7 +49,12 @@
       "Bash(cd \"C:\\\\Users\\\\Leo\\\\OneDrive\\\\Área de Trabalho\\\\TrabFinal\" && rm -rf bin && javac -encoding UTF-8 -cp \"lib/*;src\" -d bin src/App.java src/db/*.java src/entidades/*.java src/enums/*.java src/erros/*.java src/interfaces/*.java src/repositorios/*.java src/repositorios/mysql/*.java src/regras/*.java src/ui/*.java src/ui/swing/*.java src/validadores/*.java 2>&1)",
       "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/documentos\" && node gerar_pdfs.js 2>&1)",
       "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/documentos\" && rm -rf node_modules package.json package-lock.json gerar_pdfs.js && ls -la)",
-      "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal\" && javac -cp \"lib/mysql-connector-j-8.0.33.jar\" -d bin -sourcepath src src/App.java 2>&1)"
+      "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal\" && javac -cp \"lib/mysql-connector-j-8.0.33.jar\" -d bin -sourcepath src src/App.java 2>&1)",
+      "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/documentos\" && npm install --save-dev puppeteer 2>&1 | tail -3 && node gerar_mer.js 2>&1)",
+      "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/documentos\" && rm -rf node_modules package.json package-lock.json gerar_mer.js mer_temp.html && ls -la)",
+      "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/documentos\" && npm install --save-dev puppeteer 2>&1 | tail -2 && node gerar_mer.js 2>&1)",
+      "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/documentos\" && rm -rf node_modules package.json package-lock.json gerar_mer.js mer_temp.html)",
+      "Bash(cd \"C:/Users/Leo/OneDrive/Área de Trabalho/TrabFinal/documentos\" && mv \"MER_Modelo_Entidade_Relacionamento.pdf\" \"MER.pdf\" && mv \"Fluxo_Navegacao.pdf\" \"Fluxo.pdf\" && mv \"Prototipacao_Telas.pdf\" \"Prototipacao.pdf\" && mv \"uml.png\" \"UML.png\" && ls)"
     ]
   }
 }
